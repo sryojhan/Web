@@ -7,6 +7,8 @@ window.onscroll = function () {
     else {
         this.goTopButton.style.display = "none";
     }
+
+
 }
 
 function onGoTop() {
@@ -18,12 +20,18 @@ function onGoTop() {
 function init() {
     this.goTopButton = document.getElementById("go_top");
     this.goTopButton.style.display = "none";
+
+
+    let frameRate = 60;
+    this.frameInterval = 1000 / frameRate;
+    this.lastFrame = 0;
 }
 
 
 function drawDots() {
-    window.requestAnimationFrame(draw);
+
     this.anim = new Dots();
+    window.requestAnimationFrame(draw);
 }
 
 
@@ -34,9 +42,15 @@ function drawTetris() {
 
 function draw() {
 
-    this.anim.update();
-    this.anim.render();
+    let time = Date.now();
+    let dif = time - this.lastFrame;
 
+    if (dif > this.frameInterval) {
+        this.lastFrame = time;
+
+        this.anim.update();
+        this.anim.render();
+    }
     window.requestAnimationFrame(draw);
 }
 
