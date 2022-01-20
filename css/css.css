@@ -1,0 +1,477 @@
+body {
+    margin: 0%;
+    zoom: 125%;
+    scroll-behavior: smooth;
+    /* padding-bottom: 200em; */
+}
+
+/* ---------------------------------------------------------------------------------------*/
+
+::-webkit-scrollbar{
+    width: 10px;
+}
+
+::-webkit-scrollbar-track{
+    background: #fff;
+}
+
+::-webkit-scrollbar-track-piece{
+    background: #fff;
+}
+
+::-webkit-scrollbar-button{
+    background: rgb(75, 100, 168);
+    
+}
+
+::-webkit-scrollbar-thumb{
+    background: rgb(75, 100, 168);
+}
+::-webkit-scrollbar-thumb:hover{
+    background: rgb(22, 30, 54);
+}
+
+/* ---------------------------------------------------------------------------------------*/
+
+#go_top{
+    display:block;
+    position: fixed;
+    bottom: 30px;
+    right: 10px;
+    z-index: 100;
+    margin: 0;
+
+    color: black;
+    text-align: center;
+    font-size: 1em;
+    font-family: 'Quicksand', sans-serif;
+    background-color: rgb(75, 100, 168);
+    border-radius: 100%;
+
+
+    text-decoration: none;
+    border: none;
+    outline: none;
+
+    transition: 0.3s;
+    visibility: visible;
+}
+
+#go_top:hover{
+    background-color: black;
+    color: white;
+    border-radius: 0;
+}
+
+
+/* ---------------------------------------------------------------------------------------*/
+
+
+div.superior {
+    /* background-image: url("../images/background/background.png"); */
+    /* background-image: url("../images/background/fondo (1).jpg"); */
+    /* background-image: url("../images/background/purple.jpg"); */
+    background-image: url("../images/background/blue.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 300px;
+    padding: 5%;
+    position: relative;
+    background-attachment: fixed;
+}
+
+
+/* ---------------------------------------------------------------------------------------*/
+
+div.header {
+    background-color: rgb(75, 100, 168);
+    /* background-color: rgb(77, 28, 138); */
+
+    width: 100%;
+    text-align: center;
+    top: 0px;
+    position: sticky;
+    z-index: 10;
+}
+
+div.header b {
+    height: 100%;
+    background-color: rgb(22, 30, 54);
+    /* background-color: rgb(204, 71, 205); */
+
+    padding-left: 20px;
+    padding-right: 20px;
+    color: rgb(105, 178, 228);
+    text-decoration: none;
+    font-size: 2em;
+    font-weight: normal;
+    font-family: 'Quicksand', sans-serif;
+    transition: 0.3s;
+}
+
+div.header a {
+    height: 100%;
+    padding-top: 0cm;
+    padding-bottom: 0cm;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: black;
+    text-decoration: none;
+    background-color: transparent;
+    font-size: 2em;
+    font-family: 'Quicksand', sans-serif;
+    transition: 0.3s;
+}
+
+div.header a:visited {
+    padding-top: 100%;
+    color: black;
+    text-decoration: none;
+    color: black;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+div.header a:hover {
+    height: 100%;
+    background-color: rgb(36, 41, 104, 10);
+    color: rgb(105, 178, 228);
+    /* background-color: rgb(234, 153, 213); */
+    text-decoration: none;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+div.header b:hover{
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+
+/* ---------------------------------------------------------------------------------------*/
+
+div.body h1 {
+    text-align: center;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    font-size: 10vw;
+    font-weight: lighter;
+    font-family: 'Source Code Pro', monospace;
+}
+
+div.body h4 {
+    margin-top: 0cm;
+    text-align: center;
+    font-size: 1.17em;
+    font-weight: bolder;
+    font-family: 'Source Code Pro', monospace;
+    
+}
+
+div.body {
+    padding-top: 0%;
+    margin-top: 0%;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 0%;
+}
+
+div.body p {
+    text-align: justify;
+    max-width: 700px;
+    margin: 0 auto;
+    margin-bottom: 0cm;
+    margin-top: 0cm;
+    font-family: 'Quicksand', sans-serif;
+}
+
+div.body video{
+    display: block;
+    width: 100%;
+    max-width: 700px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+/* ---------------------------------------------------------------------------------------*/
+
+div.footer {
+    background-color: rgb(75, 100, 168);
+    width: 100%;
+    text-align: center;
+    top: 20px;
+    position: relative;
+}
+
+div.footer a {
+    padding-left: 20px;
+    padding-right: 20px;
+    color: black;
+    text-decoration: none;
+    background-color: transparent;
+    font-size: 1em;
+    font-family: 'Quicksand', sans-serif;
+}
+
+div.footer a:visited {
+    padding-top: 100%;
+    color: black;
+    text-decoration: none;
+    color: black;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+div.footer a:hover {
+    height: 100%;
+    background-color: rgb(36, 41, 104, 10);
+    color: rgb(105, 178, 228);
+    text-decoration: none;
+}
+
+
+/* ---------------------------------------------------------------------------------------*/
+
+div.parallax {
+    height: fit-content;
+    background-attachment: fixed;
+    background-image: url("../images/background/purple.jpg");
+    /* background-image: url("../images/background/fondo (2).jpg"); */
+    /* background-image: url("../images/background/background.png"); */
+    background-size: cover;
+    background-position: left;
+    margin-top: 0%;
+    padding-top: 0%;
+}
+
+div.parallax h1 {
+    text-align: center;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    font-size: 100px;
+    color: white;
+    text-shadow: 2px 2px black;
+    font-weight: lighter;
+    display: block;
+    font-family: 'Source Code Pro', monospace;
+}
+
+div.parallax h2 {
+    text-align: center;
+    font-size: 50px;
+    position: relative;
+    color: white;
+    text-shadow: 1px 1px black;
+    font-weight: lighter;
+    font-family: 'Source Code Pro', monospace;
+    font-weight: bolder;
+
+    padding-top: 0%;
+    margin-top: 0%;
+    margin-bottom: 0%;
+}
+
+div.parallax p {
+    text-align: center;
+    font-size: 30px;
+    position: relative;
+    color: white;
+    text-shadow: 1px 1px black;
+    font-family: 'Source Code Pro', monospace;
+    margin: 20%;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+/* ---------------------------------------------------------------------------------------*/
+
+div.list_container{
+    min-height: 600px;
+    margin: auto;
+    margin-top: 20px;
+    width: 70%;
+    /*background: #ddd;*/
+    text-align: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size:auto;
+}
+
+.list_container a{
+    text-decoration: none;
+}
+
+.list_container ul{
+    display: inline-block;
+    margin: 10px;
+    margin-bottom: 5px;
+    width: 95%;
+    padding: 0;
+}
+
+.list_container li{
+    /* background: rgba(100, 100, 100, .5); */
+    /* background-image: url("../images/background/background.png"); */
+    background: rgba(150, 150, 150, .2);
+    background-attachment: fixed;
+    background-size: cover;
+    display: table;
+    list-style-type: none;
+    margin: auto;
+    margin-bottom: 5px;
+    text-decoration: none;
+    width: 90%;
+    color: black;
+    max-height: 100px;
+    height: 100px;
+    transition: 0.3s;
+    padding: 0%;
+    position: relative;
+}
+
+.list_container li:hover{
+    width: 100%;
+    max-height: 120px;
+    height: 120px;
+    /* background: transparent; */
+    background-image: url("../images/background/cat.jpeg");
+    /* background-image: url("../images/background/xd.jpg"); */
+    /* background-image: url("../images/background/dark.jpg"); */
+    color: white;
+}
+
+.list_container li:hover h1{
+    color:white;
+    transition: 0.2s;
+}
+
+.list_container li img{
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    height: 90%;
+}
+
+.list_container li h1{
+    color: black;
+    text-align: left;
+    position: relative;
+    font-size: 20px;
+    left: 25%;
+    margin-left: 20px;
+}
+
+.list_container li p{
+    width: 50%;
+    text-align: left;
+    position: relative;
+    left: 25%;
+    margin-left: 20px;
+    max-height: 10%;
+
+    font-size: 18px;
+
+    display: block;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    word-wrap:break-word;
+    max-height: 3em;
+    line-height: 1em;
+}
+
+
+.list_container li:hover p, .list_container li:hover h1{
+    margin-left: 10px;
+}
+
+.list_container h1{
+    text-align: left;
+    position: relative;
+    left: 5%;
+    color: black;
+    font-family: 'Quicksand', sans-serif;
+    margin-bottom: 0%;
+}
+/* ---------------------------------------------------------------------------------------*/
+
+.download, .repository, .processing{
+    display: inline-block;
+    width: auto;
+    height: auto;
+    color: white;
+    padding : 10px;
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+.download{
+    background: #2196F3;
+
+}
+
+.processing{
+    background: #950740;
+}
+.repository{
+    background: #04AA6D;
+}
+
+.download:hover, .repository:hover, .processing:hover{
+    background: gray;
+    color:black;
+}
+
+/* ---------------------------------------------------------------------------------------*/
+
+div.canvasbg {
+    height: fit-content;
+    background-color: rgb(22, 30, 54);
+    background-size: cover;
+    background-position: left;
+    margin: 0%;
+    padding: 0%;
+    width: 100%;
+}
+
+div.canvasbg h1 {
+    text-align: center;
+    position: absolute;
+    margin-top: 90px;
+    width: 100%;
+    font-size: 100px;
+    color: white;
+    text-shadow: 3px 3px rgb(100, 100, 100);
+    font-weight: lighter;
+    font-family: 'Source Code Pro', monospace;
+
+}
+
+/* ---------------------------------------------------------------------------------------*/
+
+div.grupo{
+    display:block;
+    visibility:visible;
+    transition: visibility 0s, opacity 0.5s linear;
+}
+
+
+/* ---------------------------------------------------------------------------------------*/
+
+
+.busqueda{
+    text-align: center; 
+    width: 100%;
+    /* border: black; */
+    /* border: brown; */
+    /* background-color: grey; */
+    height: 30px;
+    margin-top: 50px;
+    font-size: larger;
+}
+
+.busqueda :focus{
+    background-color: brown;
+}
+
+
+/* ---------------------------------------------------------------------------------------*/
