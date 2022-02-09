@@ -72,6 +72,7 @@ div.superior {
     /* background-image: url("../images/background/fondo (1).jpg"); */
     /* background-image: url("../images/background/purple.jpg"); */
     background-image: url("../images/background/blue.jpg");
+    background-image: url("../images/background/ghosts.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     height: 300px;
@@ -228,7 +229,7 @@ div.footer a:hover {
     color: rgb(105, 178, 228);
     text-decoration: none;
 }
-
+    
 
 /* ---------------------------------------------------------------------------------------*/
 
@@ -236,6 +237,7 @@ div.parallax {
     height: fit-content;
     background-attachment: fixed;
     background-image: url("../images/background/purple.jpg");
+    background-image: url("../images/background/ghosts.jpg");
     /* background-image: url("../images/background/fondo (2).jpg"); */
     /* background-image: url("../images/background/background.png"); */
     background-size: cover;
@@ -334,10 +336,11 @@ div.list_container{
     max-height: 120px;
     height: 120px;
     /* background: transparent; */
-    background-image: url("../images/background/cat.jpeg");
+    background-image: url("../images/background/ghosts.jpg");
     /* background-image: url("../images/background/xd.jpg"); */
     /* background-image: url("../images/background/dark.jpg"); */
     color: white;
+    color: blue;
 }
 
 .list_container li:hover h1{
