@@ -11,8 +11,6 @@ class Dots {
         let inv_density = 5000;
         let space = this.width * this.height;
         let size = Math.round(space / inv_density);
-        console.log(space);
-        console.log("Se han generado: " + size + " partículas");
         let f = () => new Particle(-100 + Math.random() * (this.width + 200), -100 + Math.random() * (this.height + 200), 2);
         for (let i = 0; i < size; i++)
             this.p.push(f());

@@ -1,0 +1,30 @@
+
+
+div.wordle{
+    align-self: center;
+    width: auto;
+    background-color: black;
+    padding-bottom: 5px;
+}
+
+div.word{
+    text-align: center;
+    margin: auto;
+    padding: 5px;
+    padding-bottom: 0%;
+
+}
+
+
+div.letter {
+    width: 30px;
+    height: 30px;
+    background-color: lightgray;
+    color: black;
+    text-align: center;
+    vertical-align:middle;
+    line-height: 30px;
+    display: inline-block;
+    margin: 0px;
+    animation-duration: 0.3s;
+}

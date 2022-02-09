@@ -336,11 +336,12 @@ div.list_container{
     max-height: 120px;
     height: 120px;
     /* background: transparent; */
-    background-image: url("../images/background/ghosts.jpg");
+    /* background-image: url("../images/background/ghosts.jpg"); */
+    background-color: #2A2A2A;
     /* background-image: url("../images/background/xd.jpg"); */
     /* background-image: url("../images/background/dark.jpg"); */
     color: white;
-    color: blue;
+    /*color: blue;*/
 }
 
 .list_container li:hover h1{

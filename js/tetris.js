@@ -44,13 +44,11 @@ class Tetris {
 
     updateResults(e) {
         let tetris = e.currentTarget.tetris;
-        //console.log(this.tetris.subString("nQueens", "nqns"));
         let somethingVisible = false;
         let text = e.srcElement.value.toLowerCase();
         for (let group of tetris.lista.getElementsByClassName("grupo")) {
 
             let visible = false;
-            //let groupVisible = group.getElementsByTagName("h1")[0].innerHTML.toLowerCase().includes(text);
             let groupVisible = this.tetris.subString(group.getElementsByTagName("h1")[0].innerHTML, text);
             for (let element of group.getElementsByTagName("li")) {
                 let h1 = element.getElementsByTagName("h1")[0];
@@ -64,11 +62,9 @@ class Tetris {
             }
 
             somethingVisible |= visible;
-            //group.style.visibility = visible ? "visible" : "hidden";
             group.style.display = visible ? "block" : "none";
         }
 
-        console.log(somethingVisible);
         document.getElementById("nothing").style.display = somethingVisible ? "none" : "block";
     }
 
@@ -96,7 +92,6 @@ class Tetris {
     cambiarFondo(dataUrl) {
         let lista = this.lista;
         lista.style.backgroundImage = 'url(' + dataUrl + ')';
-        //lista.style.backgroundPositionX = lista.offsetLeft + "px";
         lista.style.backgroundPositionX = "center";
     }
     crearTablero() {
