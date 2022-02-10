@@ -1,14 +1,11 @@
 window.onscroll = function () {
+    if (this.goTopButton == undefined)
+        return;
 
-    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-        if (typeof (this.goTopButton) != undefined)
-            this.goTopButton.style.display = "block";
-    }
-    else {
+    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100)
+        this.goTopButton.style.display = "block";
+    else
         this.goTopButton.style.display = "none";
-    }
-
-
 }
 
 function onGoTop() {

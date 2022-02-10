@@ -1,7 +1,8 @@
 
 
-Cosas que aun tengo pendientes:
+# Cosas que aun tengo pendientes:
 
+    He hecho un wordle xd
     Hacer un mejor icono para la página
     Mejorar el boton de volver arriba
     cambiar la paleta de colores para los headers para que encaje con el fondo
@@ -11,7 +12,7 @@ Cosas que aun tengo pendientes:
     y con eso y un bizcocho, hasta mañana a las ocho
 
 
-Hay cuatro páginas
+# Hay cuatro páginas
     
     Main ( a qué me dedico, quien soy, resumen básico, dos párrafos, links a otras partes de la página )
 
