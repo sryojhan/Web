@@ -1,34 +1,52 @@
-
-
-
 function init_wordle() {
     this.Wordle = new Wordle(document.getElementsByClassName("wordle")[0]);
-
-
 }
 
 
 class Wordle {
-
     constructor(wordle) {
-        const numeroLetras = 5;
-        const numeroIntentos = 6;
+        this.wordleClass = wordle;
 
-        let palabra = wordle.getElementsByClassName("word")[0];
-        let letra = palabra.innerHTML;
-        palabra.innerHTML = "";
+        this.initializeHtml(wordle);
 
-        for (let i = 0; i < numeroLetras; i++)
-            palabra.innerHTML += letra;
+        this.setListener();
 
-        let htmlpalabra = wordle.innerHTML;
+        this.word = "";
+        this.answer = this.getWord();
+        this.currentWord = 0;
+        this.currentLetter = 0;
+    }
+
+    /**
+     * Creates the html elements to be used for the game
+     */
+    initializeHtml(wordle) {
+        const letterCount = 5;
+        const numTries = 6;
+
+        let word = wordle.getElementsByClassName("word")[0];
+        let letter = word.innerHTML;
+        word.innerHTML = "";
+
+        //Initialize letters
+        for (let i = 0; i < letterCount; i++)
+            word.innerHTML += letter;
+
+        //Initialize words
+        let wordHtml = wordle.innerHTML;
         wordle.innerHTML = "";
-        for (let i = 0; i < numeroIntentos; i++) {
-            wordle.innerHTML += htmlpalabra;
+        for (let i = 0; i < numTries; i++) {
+            wordle.innerHTML += wordHtml;
         }
 
-        this.wordle = wordle;
+        this.letterCount = letterCount;
+        this.tries = numTries;
+    }
 
+    /**
+     * initialize the listener to listen to the key presses
+     */
+    setListener() {
         let writeLetter = (key) => this.writeLetter(key);
         let eraseLetter = () => this.eraseLetter();
         let submitWord = () => this.submitWord();
@@ -43,55 +61,50 @@ class Wordle {
                 submitWord();
         });
 
-        this.word = "";
-        this.answer = "yepes";
-        //this.answer = this.getWord();
-        this.currentWord = 0;
-        this.currentLetter = 0;
-
-        this.letterCount = numeroLetras;
-        this.tries = numeroIntentos;
-
     }
 
+    /**
+     * Process the word when the enter key has been pressed
+     */
     submitWord() {
         if (this.currentLetter == this.answer.length && this.currentWord < this.tries) {
-
             let correct = true;
 
+            let tempAnswer = this.answer;
+            let letters = this.wordleClass.getElementsByClassName("word")[this.currentWord].getElementsByClassName("letter");
 
-            let resultado = this.answer;
-            let letters = this.wordle.getElementsByClassName("word")[this.currentWord].getElementsByClassName("letter");
             for (let idx = 0; idx < letters.length; idx++) {
-                let letra = letters[idx];
-                let color = "rgb(50, 200, 50)"
-                if (letra.textContent !== resultado[idx]) {
-                    correct = false;
+
+                /*
+                    While we iterate through the letters, we will remove the letter from the temporal answer, to avoid repetitions
+                */
+
+                let letter = letters[idx];
+                let color = "rgb(50, 200, 50)"   //Green color by default
+                if (letter.textContent === tempAnswer[idx]) {  //If the letter is right
+                    tempAnswer = this.string_replace(tempAnswer, idx, ' ');
+
+                } else {
+
+                    correct = false;   //If one is incorrect, then the word is wrong
                     color = "rgb(100, 100, 100)";
 
-                    if (resultado.includes(letra.textContent)) {
-                        
-                        let newindex = resultado.indexOf(letra);
-                        if(newindex >= 0){ //Another letter is found in the word
-                            if (newindex >= 0 && letters[newindex].textContent !== resultado[newindex]){
-                                resultado = this.replace(resultado, newindex, ' ');
+                    if (tempAnswer.includes(letter.textContent)) {  //If it is wrong, but the letter is in the word
+
+                        let newindex = tempAnswer.indexOf(letter.textContent);
+                        if (newindex >= 0) { //Another letter is found in the word
+
+                            if (letters[newindex].textContent !== tempAnswer[newindex]) {
+                                tempAnswer = this.string_replace(tempAnswer, newindex, ' ');
                                 color = "rgb(200, 200, 50)";
-                            }else{
+                            } else
                                 color = "rgb(100, 100, 100)";
-                            }
-
-                        }else{
-                            color = "rgb(200, 200, 50)";
-
                         }
                     }
-                } else {
-                    resultado = this.replace(resultado, idx, ' ');
                 }
 
-                console.log(resultado);
-                letra.style.backgroundColor = color;
-                letra.style.color = "white";
+                letter.style.backgroundColor = color;
+                letter.style.color = "white";
             }
 
 
@@ -102,12 +115,9 @@ class Wordle {
         }
     }
 
-    replace(str, idx, char) {
-        if (idx > str.length - 1)
-            return str;
-        return str.substring(0, idx) + char + str.substring(idx + 1)
-    }
-
+    /**
+     * Erase the last letter when the backspace key has been pressed
+     */
     eraseLetter() {
         if (this.currentLetter > 0 && this.currentWord < this.tries) {
 
@@ -115,9 +125,14 @@ class Wordle {
             this.getLetter().textContent = " ";
         }
     }
+
+    /**
+     *  Writes the next letter of the word
+     * @param {char} key letter to be written
+     */
     writeLetter(key) {
-        key = key.toLowerCase();
         if (this.currentLetter < this.answer.length && this.currentWord < this.tries) {
+            key = key.toLowerCase();
 
             this.getLetter().textContent = key;
 
@@ -126,20 +141,44 @@ class Wordle {
         }
     }
 
+    /**
+     *  Get the html element of the current word
+     * @returns doc element
+     */
     getLetter() {
-        let word = this.wordle.getElementsByClassName("word")[this.currentWord];
+        let word = this.wordleClass.getElementsByClassName("word")[this.currentWord];
         return word.getElementsByClassName("letter")[this.currentLetter];
     }
 
-    hashFunction() {
+    /**
+     * Returns a number between cero and a value using certain conditions
+     * @param {number} size max number, exclusive, 
+     */
+    hashFunction(size) {
 
     }
 
+    /**
+     * Gets a word from a list of possible candidates
+     * @returns the word to be played
+     */
     getWord() {
-        let day = new Date();
-        console.log(day.getDate());
         const possibleWords = ["yepes", "yojhi", "novia", "sexoo"];
         return possibleWords[Math.floor(Math.random() * possibleWords.length)];
     }
+
+    /**
+     * Replace a char inside a string
+     * @param {string} str string to be replaced
+     * @param {number} idx index of the position to be replaced
+     * @param {char} char character to be included in the string
+     * @returns 
+     */
+    string_replace(str, idx, char) {
+        if (idx > str.length - 1)
+            return str;
+        return str.substring(0, idx) + char + str.substring(idx + 1)
+    }
+
 }
 

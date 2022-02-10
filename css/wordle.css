@@ -16,13 +16,14 @@ div.word{
 
 
 div.letter {
-    width: 30px;
-    height: 30px;
+    width: 60px;
+    height: 60px;
     background-color: lightgray;
     color: black;
     text-align: center;
     vertical-align:middle;
-    line-height: 30px;
+    line-height: 60px;
+    font-size:x-large;
     display: inline-block;
     margin: 0px;
     animation-duration: 0.3s;

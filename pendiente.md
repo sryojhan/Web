@@ -3,6 +3,7 @@
 # Cosas que aun tengo pendientes:
 
     He hecho un wordle xd
+    Mejorar el wordle
     Hacer un mejor icono para la página
     Mejorar el boton de volver arriba
     cambiar la paleta de colores para los headers para que encaje con el fondo
