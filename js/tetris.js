@@ -1,10 +1,34 @@
-
+/**
+ * Run a tetris simulation in the canvas
+ */
 class Tetris {
     constructor() {
-        let lista = document.getElementById("lista");
-        this.lista = lista;
+        this.list = document.getElementById("lista");
         let canvas = document.getElementById("canvas");
         this.ctx = canvas.getContext("2d");
+
+        this.setCanvasStyle(canvas);
+
+        this.changeBackground(canvas.toDataURL());
+        this.createBoard();
+
+        this.canvas = canvas;
+        this.timer = 0;
+        this.lastPiece = -1;
+        this.newPiece();
+
+        this.lost = false;
+        this.blank = false;
+        this.count = 0;
+
+        this.tickTime = 0;   //Refresh rate
+        for (let i = 0; i < 80; i++) {
+            this.update();
+        }
+        this.tickTime = 15;
+    }
+
+    setCanvasStyle(canvas) {
         canvas.style.backgroundRepeat = "no-repeat";
         canvas.style.position = "relative";
 
@@ -14,140 +38,73 @@ class Tetris {
         canvas.height = window.innerHeight;
 
         canvas.style.display = "none";
-
-        let dataUrl = canvas.toDataURL();
-        this.cambiarFondo(dataUrl);
-
-        this.crearTablero();
-
-        this.canvas = canvas;
-        this.timer = 0;
-        this.ultimaPieza = -1;
-        this.nuevaPieza();
-
-        this.perdiste = false;
-        this.gris = false;
-        this.contador = 0;
-
-        this.tickTime = 0;
-        for (let i = 0; i < 80; i++) {
-            this.update();
-        }
-        this.tickTime = 15;
-
-         // /*Borrar esta linea ->>>*/ this.tickTime = 0;
-
-        let input = document.querySelector("input");
-        input.addEventListener('input', this.updateResults);
-        input.tetris = this;
     }
 
-    updateResults(e) {
-        let tetris = e.currentTarget.tetris;
-        let somethingVisible = false;
-        let text = e.srcElement.value.toLowerCase();
-        for (let group of tetris.lista.getElementsByClassName("grupo")) {
-
-            let visible = false;
-            let groupVisible = this.tetris.subString(group.getElementsByTagName("h1")[0].innerHTML, text);
-            for (let element of group.getElementsByTagName("li")) {
-                let h1 = element.getElementsByTagName("h1")[0];
-
-                if (groupVisible || /*h1.innerHTML.toLowerCase().includes(text)*/ this.tetris.subString(h1.innerHTML, text)) {
-                    element.style.display = "table";
-                    visible = true;
-                } else {
-                    element.style.display = "none";
-                }
-            }
-
-            somethingVisible |= visible;
-            group.style.display = visible ? "block" : "none";
-        }
-
-        document.getElementById("nothing").style.display = somethingVisible ? "none" : "block";
+    changeBackground(dataUrl) {
+        this.list.style.backgroundImage = 'url(' + dataUrl + ')';
+        this.list.style.backgroundPositionX = "center";
     }
 
+    createBoard() {
+        this.width = 16;
+        
+        this.board = new Array(this.width);
+        this.pieceWidth = canvas.width / this.width;
+        this.height = Math.floor(canvas.height / this.pieceWidth);
 
-    subString(big, small) {
-        big = big.toLowerCase();
-        small = small.toLowerCase();
-        let c = 0;
-        for (let i = 0; i < small.length; i++) {
-            let founded = false;
-            while (c < big.length) {
-                if (big[c] == small[i]){
-                    founded = true;
-                    break;
-                }
-                c++;
-            }
-            if(!founded)
-                return false;
-        }
-        return true;
-    }
-
-
-    cambiarFondo(dataUrl) {
-        let lista = this.lista;
-        lista.style.backgroundImage = 'url(' + dataUrl + ')';
-        lista.style.backgroundPositionX = "center";
-    }
-    crearTablero() {
-        this.ancho = 16;
-        this.tablero = new Array(this.ancho);
-        this.anchoPieza = canvas.width / this.ancho;
-        this.alto = Math.floor(canvas.height / this.anchoPieza);
-
-        for (let i = 0; i < this.ancho; i++) {
-            this.tablero[i] = new Array(this.alto);
-            for (let c = 0; c < this.alto; c++) {
-                this.tablero[i][c] = false;
+        //Initialize the 2d array to false
+        for (let i = 0; i < this.width; i++) {
+            this.board[i] = new Array(this.height);
+            for (let c = 0; c < this.height; c++) {
+                this.board[i][c] = false;
             }
         }
 
-        for (let i = 0; i < this.ancho; i++) {
-            this.tablero[i][this.alto - 1] = this.alto;
+        //the last line of the board will contain numbers that represent the maximun height of that line
+        for (let i = 0; i < this.width; i++) {
+            this.board[i][this.height - 1] = this.height;
         }
 
-        this.piezasColocadas = [];
+        this.placedPieces = [];
     }
 
     update() {
-        if (!this.perdiste && ++this.timer > this.tickTime) {
+        if (!this.lost && ++this.timer > this.tickTime) {
             this.timer = 0;
 
-            let detener = false;
-            let tablero = this.tablero;
-            let piezasColocadas = this.piezasColocadas;
+            let stop = false;
+            let board = this.board;
+            let placedPieces = this.placedPieces;
 
-            this.pieza.forEach(element => {
-                if (element.update()) {
-                    detener = true;
+            //try to move each piece, and check if any of them has collided
+            this.currentPiece.forEach(element => {
+                if (element.check()) {
+                    stop = true;
                 }
             });
 
-            if (detener) {
-                this.pieza.forEach(element => {
+            if (stop) {
+                //If the piece has collided, check if the game has been lost
+                this.currentPiece.forEach(element => {
                     if (element.pos.y == 0) {
-                        this.perdiste = true;
-                        this.contador = 0;
+                        this.lost = true;
+                        this.count = 0;
                     }
                     else {
-                        piezasColocadas.push(element);
-                        tablero[element.pos.x][element.pos.y] = true;
-
-
-                        tablero[element.pos.x][this.alto - 1] = Math.min(tablero[element.pos.x][this.alto - 1], element.pos.y);
+                        //Place the piece in the board and update the values
+                        placedPieces.push(element);
+                        board[element.pos.x][element.pos.y] = true;
+                        board[element.pos.x][this.height - 1] = Math.min(board[element.pos.x][this.height - 1], element.pos.y);
 
                     }
                 });
 
-                this.nuevaPieza();
+                //In any case, create a new piece
+                this.newPiece();
             } else {
-                this.pieza.forEach(element => {
-                    element.avanzar();
+                //If the piece wont collide in the next update, then move the piece
+                this.currentPiece.forEach(element => {
+                    element.move();
                 });
             }
 
@@ -155,148 +112,132 @@ class Tetris {
     }
 
     render() {
-
-        if (!this.perdiste) {
+        if (!this.lost) {
+            //If the game isn't lost, render as usual
             this.ctx.clearRect(0, 0, canvas.width, canvas.height);
-            this.pieza.forEach(element => {
+
+            this.currentPiece.forEach(element => {
                 element.render();
             });
 
-            this.piezasColocadas.forEach(element => {
+            this.placedPieces.forEach(element => {
                 element.render();
             });
+
         } else {
 
+            //flick the canvas when the game is lost
             if (++this.timer > this.tickTime / 4 * 3) {
 
                 this.ctx.clearRect(0, 0, canvas.width, canvas.height);
-                if (this.contador > 7) {
-                    if (this.contador == 8)
+
+                if (this.count > 7) { //When the canvas has stopoed flickering, wait a bit before restarting
+                    if (this.count == 8)
                         this.timer = 0;
-                    this.gris = true;
+                    this.blank = true;
                     if (this.timer > this.tickTime * 2) {
-                        this.crearTablero();
-                        this.perdiste =
-                            false;
+                        this.createBoard();
+                        this.lost = false;
                     }
-                    this.contador++;
+                    this.count++;
                     return;
                 }
 
                 this.timer = 0;
-                this.contador++;
+                this.count++;
 
-
-                if (!this.gris) {
-                    this.piezasColocadas.forEach(element => {
+                if (!this.blank) {
+                    this.placedPieces.forEach(element => {
                         element.render();
                     });
                 }
 
-                this.gris = !this.gris;
-
-
+                this.blank = !this.blank;
             }
 
         }
 
         let dataUrl = canvas.toDataURL();
-        this.cambiarFondo(dataUrl);
+        this.changeBackground(dataUrl);
     }
 
 
-    nuevaPieza() {
+    newPiece() {
 
-        /*
-            Colores:
-            Rojo:       "rgb(255, 89, 94)";
-            Amarillo:   "rgb(255, 202, 58)";
-            Verde:      "rgb(138, 201, 38)";
-            Azul:       "rgb(25, 130, 196)";
-            Morado:     "rgb(106, 76, 147)";
-    
-    
-    
-            Colores2: 
-            F6CC6B
-            FF5964
-            C2B6FB
-            E39DF0
-            333138
-        */
         let colores = ["#F6CC6B", "#FF5964", "#C2B6FB", "#FFC6FF", "#ffb4a2", "#A0C4FF", "#CAFFBF"];
 
-        this.pieza = [];
-        let r = Math.floor(Math.random() * 7);
-        if (r == this.ultimaPieza) {
-            r = Math.floor(Math.random() * 7);
+        this.currentPiece = [];
+
+        let r = Math.floor(Math.random() * 7); //Select a random piece
+        if (r == this.lastPiece) {
+            r = Math.floor(Math.random() * 7); //If it has been already selected, try again once
         }
-        let color = colores[r];
+
+        let color = colores[r]; //Set the color of the selected type of piece
 
         switch (r) {
-            case 0:  //Cubo
+            case 0:  //Cube
                 {
+                    let pos = new Vector(Math.floor(Math.random() * (this.width - 1)), 0);
 
-                    let pos = new Vector(Math.floor(Math.random() * (this.ancho - 1)), 0);
-
-                    let pieza = new Pieza(this.canvas, this.ctx, this.anchoPieza, this, pos, color);
-                    this.pieza.push(pieza);
-                    pieza = new Pieza(this.canvas, this.ctx, this.anchoPieza, this, new Vector(pos.x, pos.y - 1), color);
-                    this.pieza.push(pieza);
-                    pieza = new Pieza(this.canvas, this.ctx, this.anchoPieza, this, new Vector(pos.x + 1, pos.y), color);
-                    this.pieza.push(pieza);
-                    pieza = new Pieza(this.canvas, this.ctx, this.anchoPieza, this, new Vector(pos.x + 1, pos.y - 1), color);
-                    this.pieza.push(pieza);
+                    let piece = new Block(this.canvas, this.ctx, this.pieceWidth, this, pos, color);
+                    this.currentPiece.push(piece);
+                    piece = new Block(this.canvas, this.ctx, this.pieceWidth, this, new Vector(pos.x, pos.y - 1), color);
+                    this.currentPiece.push(piece);
+                    piece = new Block(this.canvas, this.ctx, this.pieceWidth, this, new Vector(pos.x + 1, pos.y), color);
+                    this.currentPiece.push(piece);
+                    piece = new Block(this.canvas, this.ctx, this.pieceWidth, this, new Vector(pos.x + 1, pos.y - 1), color);
+                    this.currentPiece.push(piece);
 
                     break;
                 }
-            case 1: //linea
+            case 1: //line
                 {
-                    if (Math.random() < .5) {
+                    if (Math.random() < .5) { //Select rotation
 
-                        let pos = new Vector(Math.floor(Math.random() * (this.ancho - 3)), 0);
-                        let pieza = new Pieza(this.canvas, this.ctx, this.anchoPieza, this, pos, color);
-                        this.pieza.push(pieza);
+                        let pos = new Vector(Math.floor(Math.random() * (this.width - 3)), 0);
+                        let piece = new Block(this.canvas, this.ctx, this.pieceWidth, this, pos, color);
+                        this.currentPiece.push(piece);
 
-                        pieza = new Pieza(this.canvas, this.ctx, this.anchoPieza, this, new Vector(pos.x + 1, pos.y), color);
-                        this.pieza.push(pieza);
-                        pieza = new Pieza(this.canvas, this.ctx, this.anchoPieza, this, new Vector(pos.x + 2, pos.y), color);
-                        this.pieza.push(pieza);
-                        pieza = new Pieza(this.canvas, this.ctx, this.anchoPieza, this, new Vector(pos.x + 3, pos.y), color);
-                        this.pieza.push(pieza);
+                        piece = new Block(this.canvas, this.ctx, this.pieceWidth, this, new Vector(pos.x + 1, pos.y), color);
+                        this.currentPiece.push(piece);
+                        piece = new Block(this.canvas, this.ctx, this.pieceWidth, this, new Vector(pos.x + 2, pos.y), color);
+                        this.currentPiece.push(piece);
+                        piece = new Block(this.canvas, this.ctx, this.pieceWidth, this, new Vector(pos.x + 3, pos.y), color);
+                        this.currentPiece.push(piece);
                     } else {
 
-                        let pieza = new Pieza(this.canvas, this.ctx, this.anchoPieza, this, null, color);
-                        this.pieza.push(pieza);
-                        let pos = pieza.pos;
+                        let piece = new Block(this.canvas, this.ctx, this.pieceWidth, this, null, color);
+                        this.currentPiece.push(piece);
+                        let pos = piece.pos;
 
-                        pieza = new Pieza(this.canvas, this.ctx, this.anchoPieza, this, new Vector(pos.x, pos.y - 1), color);
-                        this.pieza.push(pieza);
-                        pieza = new Pieza(this.canvas, this.ctx, this.anchoPieza, this, new Vector(pos.x, pos.y - 2), color);
-                        this.pieza.push(pieza);
-                        pieza = new Pieza(this.canvas, this.ctx, this.anchoPieza, this, new Vector(pos.x, pos.y - 3), color);
-                        this.pieza.push(pieza);
+                        piece = new Block(this.canvas, this.ctx, this.pieceWidth, this, new Vector(pos.x, pos.y - 1), color);
+                        this.currentPiece.push(piece);
+                        piece = new Block(this.canvas, this.ctx, this.pieceWidth, this, new Vector(pos.x, pos.y - 2), color);
+                        this.currentPiece.push(piece);
+                        piece = new Block(this.canvas, this.ctx, this.pieceWidth, this, new Vector(pos.x, pos.y - 3), color);
+                        this.currentPiece.push(piece);
                     }
                     break;
                 }
 
             case 2: //T
                 {
-                    let pos = new Vector(1 + Math.floor(Math.random() * (this.ancho - 2)), 0);
+                    let pos = new Vector(1 + Math.floor(Math.random() * (this.width - 2)), 0);
 
-                    let pieza = new Pieza(this.canvas, this.ctx, this.anchoPieza, this, pos, color);
-                    this.pieza.push(pieza);
+                    let piece = new Block(this.canvas, this.ctx, this.pieceWidth, this, pos, color);
+                    this.currentPiece.push(piece);
 
-                    pieza = new Pieza(this.canvas, this.ctx, this.anchoPieza, this, new Vector(pos.x + 1, pos.y), color);
-                    this.pieza.push(pieza);
-                    pieza = new Pieza(this.canvas, this.ctx, this.anchoPieza, this, new Vector(pos.x - 1, pos.y), color);
-                    this.pieza.push(pieza);
-                    pieza = new Pieza(this.canvas, this.ctx, this.anchoPieza, this, new Vector(pos.x, pos.y + 1), color);
-                    this.pieza.push(pieza);
-                    pieza = new Pieza(this.canvas, this.ctx, this.anchoPieza, this, new Vector(pos.x, pos.y - 1), color);
-                    this.pieza.push(pieza);
+                    piece = new Block(this.canvas, this.ctx, this.pieceWidth, this, new Vector(pos.x + 1, pos.y), color);
+                    this.currentPiece.push(piece);
+                    piece = new Block(this.canvas, this.ctx, this.pieceWidth, this, new Vector(pos.x - 1, pos.y), color);
+                    this.currentPiece.push(piece);
+                    piece = new Block(this.canvas, this.ctx, this.pieceWidth, this, new Vector(pos.x, pos.y + 1), color);
+                    this.currentPiece.push(piece);
+                    piece = new Block(this.canvas, this.ctx, this.pieceWidth, this, new Vector(pos.x, pos.y - 1), color);
+                    this.currentPiece.push(piece);
 
-                    this.pieza.splice(Math.ceil(Math.random() * 3), 1);
+                    this.currentPiece.splice(Math.ceil(Math.random() * 3), 1);
 
                     break;
                 }
@@ -304,7 +245,7 @@ class Tetris {
             case 3: //Z
             case 4:
                 {
-                    let esquema = Math.random() > 0.5 ?
+                    let blueprint = Math.random() > 0.5 ?
                         [[0, 1, 0],
                         [1, 1, 0],
                         [1, 0, 0]] :
@@ -312,33 +253,33 @@ class Tetris {
                         [[1, 1, 0],
                         [0, 1, 1]];
 
-                    let tipoZ = r == 3;
+                    let zType = r == 3;  //check if the piece should be flipped (there are two different z piece)
 
-                    let pos = new Vector(Math.floor(Math.random() * (this.ancho - 2)), 0);
+                    let pos = new Vector(Math.floor(Math.random() * (this.width - 2)), 0);
 
 
-                    for (let y = 0; y < esquema.length; y++) {
-                        for (let x = 0; x < esquema[y].length; x++) {
-                            let nx = x;
-                            if (tipoZ) {
-                                nx = 2 - nx;
+                    for (let y = 0; y < blueprint.length; y++) {
+                        for (let x = 0; x < blueprint[y].length; x++) {
+                            let xoffset = x;
+                            if (zType) {
+                                xoffset = 2 - xoffset;
                             }
-                            if (esquema[y][x] == 0)
+                            if (blueprint[y][x] == 0)
                                 continue;
 
-                            let pieza = new Pieza(this.canvas, this.ctx, this.anchoPieza, this, new Vector(pos.x + nx, pos.y - y), color);
-                            this.pieza.push(pieza);
+                            let pieza = new Block(this.canvas, this.ctx, this.pieceWidth, this, new Vector(pos.x + xoffset, pos.y - y), color);
+                            this.currentPiece.push(pieza);
                         }
                     }
 
                     break;
 
                 }
-            case 5:
+            case 5: //L piece
             case 6:
                 {
                     let rotation = Math.random();
-                    let esquema = rotation < .25 ?
+                    let blueprint = rotation < .25 ?
                         [[0, 0, 1],
                         [1, 1, 1]]
                         : rotation < .5 ?
@@ -356,22 +297,22 @@ class Tetris {
                                 [1, 0],
                                 [1, 1]];
 
-                    let tipoL = r == 5;
+                    let lType = r == 5;
 
-                    let pos = new Vector(Math.floor(Math.random() * (this.ancho - 2)), 0);
+                    let pos = new Vector(Math.floor(Math.random() * (this.width - 2)), 0);
 
 
-                    for (let y = 0; y < esquema.length; y++) {
-                        for (let x = 0; x < esquema[y].length; x++) {
-                            let nx = x;
-                            if (tipoL) {
-                                nx = 2 - nx;
+                    for (let y = 0; y < blueprint.length; y++) {
+                        for (let x = 0; x < blueprint[y].length; x++) {
+                            let xoffset = x;
+                            if (lType) {
+                                xoffset = 2 - xoffset;
                             }
-                            if (esquema[y][x] == 0)
+                            if (blueprint[y][x] == 0)
                                 continue;
 
-                            let pieza = new Pieza(this.canvas, this.ctx, this.anchoPieza, this, new Vector(pos.x + nx, pos.y - y), color);
-                            this.pieza.push(pieza);
+                            let pieza = new Block(this.canvas, this.ctx, this.pieceWidth, this, new Vector(pos.x + xoffset, pos.y - y), color);
+                            this.currentPiece.push(pieza);
                         }
                     }
 
@@ -379,17 +320,22 @@ class Tetris {
                 }
         }
 
-        this.ultimaPieza = r;
-        this.posicionPieza();
+        this.lastPiece = r;
+        this.alignPiecePosition();
     }
 
 
+    /**
+     * Algorithm that places the piece in the best position it can find
+     * It cannot rotate the piece or move it once it has started moving
+     * This is not the best tetris solver algorithm but it is good enought for its purpose
+     */
 
-
-    posicionPieza() {
-        let xmin = this.pieza[0].pos.x;
-        let xmax = this.pieza[0].pos.x;
-        this.pieza.forEach(element => {
+    alignPiecePosition() {
+        //Find the smallest and greatest piece in the x coordinate
+        let xmin = this.currentPiece[0].pos.x;
+        let xmax = this.currentPiece[0].pos.x;
+        this.currentPiece.forEach(element => {
             if (element.pos.x < xmin && element.pos.y == 0)
                 xmin = element.pos.x;
 
@@ -397,104 +343,116 @@ class Tetris {
                 xmax = element.pos.x;
         });
 
-        let offset = -xmin;
-        let finaloffset = offset;
-        let posible = false;
-        let minNumeroHuecos = 10;
 
-        let altoMax = this.alto;
-        for (let i = 0; i < this.ancho; i++) {
-            altoMax = Math.min(altoMax, this.tablero[i][this.alto - 1]);
+        let posible = false;
+        let finaloffset = -xmin;
+        let smallestHoleCount = 10;
+
+        let maxHeight = this.height;
+        for (let i = 0; i < this.width; i++) {
+            maxHeight = Math.min(maxHeight, this.board[i][this.height - 1]);
         }
 
-        for (let y = this.alto - 2; y >= altoMax; y--) {
-            for (let noffset = offset; noffset < this.ancho - xmax; noffset++) {
+        /*
+        Iterate the board from bottom to top and from left to right
+        offset value is the maximun we can place a piece to the left before it reaches the wall
+
+        */
+        for (let yoffset = this.height - 2; yoffset >= maxHeight; yoffset--) {
+            for (let xoffset = -xmin; xoffset < this.width - xmax; xoffset++) {
+
                 posible = true;
-                //if(y == this.alto - 2 || this.tablero[xmin + noffset][y + 1])
-                //    aunHayPiezas = true;
 
-                for (let element of this.pieza) {
-                    let nx = element.pos.x + noffset;
-                    let ny = y + element.pos.y;
+                for (let element of this.currentPiece) { //Check it the piece can fit inside the bounds
+                    let x = element.pos.x + xoffset;
+                    let y = element.pos.y + yoffset;
 
-                    if (nx < 0 || nx >= this.ancho)
+                    if (x < 0 || x >= this.width)
                         posible = false;
-                    else if (this.tablero[nx][ny])
+                    else if (this.board[x][y])
                         posible = false;
-                    else if (ny >= this.tablero[nx][this.alto - 1]) {
+                    else if (y >= this.board[x][this.height - 1]) {
                         posible = false;
                     }
+
                     if (!posible)
                         break;
-
                 }
 
-                if (posible) {
-                    let agujeros = 0;
-                    this.pieza.forEach(element => {
-                        let nx = element.pos.x + noffset;
-                        let ny = y + element.pos.y;
 
-                        if (ny < this.alto - 2) {
-                            if (!this.tablero[nx][ny + 1])
-                                agujeros++;
+                if (posible) { //If the piece can be placed in that position, check the number of holes
+                    let holes = 0;
+                    this.currentPiece.forEach(element => {
+                        let x = element.pos.x + xoffset;
+                        let y = element.pos.y + yoffset;
+
+                        if (y < this.height - 2) { //If it is not in the ground
+                            if (!this.board[x][y + 1]) //if the place just below the block is not occupied, add a hole
+                                holes++;
                         }
                     });
 
-                    if (agujeros < minNumeroHuecos) {
-                        minNumeroHuecos = agujeros;
-                        finaloffset = noffset;
+                    //If we found the smallest hole until now, update the smallest hole
+                    if (holes < smallestHoleCount) {
+                        smallestHoleCount = holes;
+                        finaloffset = xoffset;
                     }
                 }
             }
         }
-        if (posible) {
-            this.pieza.forEach(element => {
+
+        if (posible) { //If we found a spot to place the piece, move it
+            this.currentPiece.forEach(element => {
                 element.pos.x += finaloffset;
             });
         }
-
     }
-
 }
 
-
-class Pieza {
+/**
+ * Each of the blocks that makes up a piece
+ */
+class Block {
     constructor(canvas, ctx, size, tetris, pos = null, color = null) {
         this.canvas = canvas;
         this.ctx = ctx;
         this.size = size;
         this.tetris = tetris;
+
         if (pos == null)
-            this.pos = new Vector(Math.floor(Math.random() * tetris.ancho), 0);
+            this.pos = new Vector(Math.floor(Math.random() * tetris.width), 0);
         else this.pos = pos;
 
         this.color = color;
     }
 
-
-    update() {
-        return this.comprobar();
-    }
-
-    avanzar() {
+    /**
+     * Move the piece down
+     */
+    move() {
         this.pos.y++;
     }
 
-    comprobar() {
-        if (this.pos.y == this.tetris.alto - 2) {
+    /**
+     * Check if the piece can move this frame or if it should stop
+     * @returns returns true if the place is being occupied. False otherwise
+     */
+    check() {
+        if (this.pos.y == this.tetris.height - 2) {
             return true;
         }
 
-        if (this.pos.y >= 0 && this.tetris.tablero[this.pos.x][this.pos.y + 1]) {
+        if (this.pos.y >= 0 && this.tetris.board[this.pos.x][this.pos.y + 1]) {
             return true;
         }
 
         return false;
     }
 
-    esValido() {
-
+    /**
+     * is the block inside the bound of the board?
+     */
+    isValid() {
         return !(this.pos.x < 0 || this.pos.x >= this.canvas.width || this.pos.y >= this.canvas.height);
     }
 
