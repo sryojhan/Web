@@ -23,7 +23,7 @@ div.letter {
     text-align: center;
     vertical-align:middle;
     line-height: 60px;
-    font-size:x-large;
+    font-size: 2em;
     display: inline-block;
     margin: 0px;
     animation-duration: 0.3s;
