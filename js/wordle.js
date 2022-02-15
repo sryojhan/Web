@@ -37,7 +37,7 @@ class ColorValues {
                 return this.colors[2 * i + 1];
             else
             if (givenColor === this.colors[2 * i + 1])
-                    return this.colors[2 * igcc ];
+                    return this.colors[2 * i ];
         }
 
         return givenColor;
