@@ -1,7 +1,48 @@
 function init_wordle() {
-    this.Wordle = new Wordle(document.getElementsByClassName("wordle")[0]);
+    this.wordle = new Wordle(document.getElementsByClassName("wordle")[0]);
 }
 
+function colorblindMode(){
+    this.wordle.toggleColors();
+    ColorValues.toggleColorBlindness();
+}
+/**
+ * Manage the wordle colors, and has support for colorblindness mode
+ */
+class ColorValues {
+    static colorblindness = false;
+    static correct() { return !this.colorblindness ? this.colors[0] : this.colors[1]; }
+    static incorrect() { return !this.colorblindness ? this.colors[2] : this.colors[3]; }
+    static almost() { return !this.colorblindness ? this.colors[4] : this.colors[5]; }
+
+    static colors = [
+        "rgb(50, 200, 50)", "rgb(0, 0, 153)",
+        "rgb(100, 100, 100)", "rgb(100, 100, 100)",
+        "rgb(200, 200, 50)", "rgb(204, 153, 0)"
+    ];
+
+    static toggleColorBlindness(value = null) {
+        if (value === null)
+            this.colorblindness = !this.colorblindness;
+        else this.colorblindness = value;
+    }
+
+    /**
+     * Given a color, return the other version of the color for colorblindness
+     */
+    static getOtherColor(givenColor) {
+
+        for (let i = 0; i < 3; i++) {
+            if (givenColor === this.colors[2 * i])
+                return this.colors[2 * i + 1];
+            else
+            if (givenColor === this.colors[2 * i + 1])
+                    return this.colors[2 * igcc ];
+        }
+
+        return givenColor;
+    }
+}
 
 class Wordle {
     constructor(wordle) {
@@ -10,6 +51,15 @@ class Wordle {
         this.initializeHtml(wordle);
 
         this.setListener();
+
+        this.setupWordle();
+    }
+
+    /**
+     * Setup wordle basic configuration
+     */
+    setupWordle() {
+        this.wordleClass.innerHTML = this.initialHtml;
 
         this.word = "";
         this.answer = this.getWord();
@@ -41,6 +91,8 @@ class Wordle {
 
         this.letterCount = letterCount;
         this.tries = numTries;
+
+        this.initialHtml = wordle.innerHTML;
     }
 
     /**
@@ -60,14 +112,27 @@ class Wordle {
             if (event.key === "Enter")
                 submitWord();
         });
+    }
 
+    toggleColors() {
+        for (let word of this.wordleClass.getElementsByClassName("word"))
+            for (let letter of word.getElementsByClassName("letter")) {
+                let style = getComputedStyle(letter);
+                letter.style.backgroundColor = ColorValues.getOtherColor(style.backgroundColor);
+            }
     }
 
     /**
      * Process the word when the enter key has been pressed
      */
     submitWord() {
-        if (this.currentLetter == this.answer.length && this.currentWord < this.tries) {
+        //If the worlde has been completed, pressing enter will restart it
+        if (this.currentWord > this.tries) {
+            this.setupWordle();
+            return;
+        }
+
+        if (this.currentLetter == this.answer.length) {
             let correct = true;
 
             let tempAnswer = this.answer;
@@ -80,14 +145,16 @@ class Wordle {
                 */
 
                 let letter = letters[idx];
-                let color = "rgb(50, 200, 50)"   //Green color by default
+                let color = ColorValues.correct();
+
+
                 if (letter.textContent === tempAnswer[idx]) {  //If the letter is right
                     tempAnswer = this.string_replace(tempAnswer, idx, ' ');
 
                 } else {
 
                     correct = false;   //If one is incorrect, then the word is wrong
-                    color = "rgb(100, 100, 100)";
+                    color = ColorValues.incorrect();
 
                     if (tempAnswer.includes(letter.textContent)) {  //If it is wrong, but the letter is in the word
 
@@ -96,9 +163,9 @@ class Wordle {
 
                             if (letters[newindex].textContent !== tempAnswer[newindex]) {
                                 tempAnswer = this.string_replace(tempAnswer, newindex, ' ');
-                                color = "rgb(200, 200, 50)";
+                                color = ColorValues.almost();
                             } else
-                                color = "rgb(100, 100, 100)";
+                                color = ColorValues.incorrect();
                         }
                     }
                 }
@@ -155,7 +222,7 @@ class Wordle {
      * @param {number} size max number, exclusive, 
      */
     hashFunction(size) {
-
+        return Math.floor(Math.random() * size);
     }
 
     /**
@@ -164,7 +231,7 @@ class Wordle {
      */
     getWord() {
         const possibleWords = ["yepes", "yojhi", "novia", "sexoo"];
-        return possibleWords[Math.floor(Math.random() * possibleWords.length)];
+        return possibleWords[this.hashFunction(possibleWords.length)];
     }
 
     /**
