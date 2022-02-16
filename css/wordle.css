@@ -3,7 +3,7 @@
 div.wordle{
     align-self: center;
     width: auto;
-    background-color: black;
+    background-color: #222;
     padding-bottom: 5px;
 }
 
@@ -27,4 +27,6 @@ div.letter {
     display: inline-block;
     margin: 0px;
     animation-duration: 0.3s;
+    font-family: 'Quicksand', sans-serif;
+
 }

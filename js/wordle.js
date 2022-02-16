@@ -15,10 +15,11 @@ class ColorValues {
     static incorrect() { return !this.colorblindness ? this.colors[2] : this.colors[3]; }
     static almost() { return !this.colorblindness ? this.colors[4] : this.colors[5]; }
 
+    //It is neccesary to use rgb because that is how color is internally stored
     static colors = [
-        "rgb(50, 200, 50)", "rgb(0, 0, 153)",
+        "rgb(255, 93, 115)", "rgb(0, 0, 153)",
         "rgb(100, 100, 100)", "rgb(100, 100, 100)",
-        "rgb(200, 200, 50)", "rgb(204, 153, 0)"
+        "rgb(140, 33, 85)", "rgb(204, 153, 0)"
     ];
 
     static toggleColorBlindness(value = null) {
