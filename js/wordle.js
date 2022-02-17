@@ -124,7 +124,7 @@ class Wordle {
     }
 
     /**
-     * Process the word when the enter key has been pressed
+     * Processes the word when the enter key has been pressed
      */
     submitWord() {
         //If the worlde has been completed, pressing enter will restart it
@@ -134,6 +134,15 @@ class Wordle {
         }
 
         if (this.currentLetter == this.answer.length) {
+
+            //Check if the given word exists 
+            if( !isAValidWord( this.word ) ){
+
+                console.log("The given word does not exist");
+                return;
+            }
+
+
             let correct = true;
 
             let tempAnswer = this.answer;
@@ -180,6 +189,7 @@ class Wordle {
                 this.currentWord = this.tries + 1;
             this.currentWord++;
             this.currentLetter = 0;
+            this.word = "";
         }
     }
 
@@ -191,6 +201,7 @@ class Wordle {
 
             this.currentLetter--;
             this.getLetter().textContent = " ";
+            this.word = this.word.slice(0,  this.word.length - 1);
         }
     }
 
@@ -231,8 +242,7 @@ class Wordle {
      * @returns the word to be played
      */
     getWord() {
-        const possibleWords = ["yepes", "yojhi", "novia", "sexoo"];
-        return possibleWords[this.hashFunction(possibleWords.length)];
+        return dictionary[this.hashFunction(dictionary.length)];
     }
 
     /**
