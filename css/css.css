@@ -63,6 +63,9 @@ body {
     border-radius: 0;
 }
 
+html {
+    scroll-behavior: smooth;
+  }
 
 /* ---------------------------------------------------------------------------------------*/
 
@@ -157,6 +160,17 @@ div.body h1 {
     font-family: 'Source Code Pro', monospace;
 }
 
+
+div.body h2 {
+    margin-top: 0cm;
+    text-align: center;
+    font-size: 2em;
+    font-weight: bolder;
+    font-family: 'Source Code Pro', monospace;
+    
+}
+
+
 div.body h4 {
     margin-top: 0cm;
     text-align: center;
@@ -176,12 +190,23 @@ div.body {
 
 div.body p {
     text-align: justify;
+    text-align-last: center;
     max-width: 700px;
     margin: 0 auto;
     margin-bottom: 0cm;
     margin-top: 0cm;
     font-family: 'Quicksand', sans-serif;
 }
+
+div.body p a {
+    text-decoration: underline;
+     text-decoration-color: black;
+}
+
+div.body p a:visited {
+    color: black;
+}
+
 
 div.body video{
     display: block;
