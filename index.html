@@ -18,7 +18,7 @@
 </head>
 
 <body onload="init(); drawDots(); init_wordle()">
-    <button id="go_top" onclick="onGoTop()">&times;</button>
+    <!-- <button id="go_top" onclick="onGoTop()">&times;</button> -->
 
     <div class="superior">
     </div>
@@ -44,10 +44,10 @@
     <div style="margin-top: 30px;"></div>
 
     <div class="header">
-        <b>Main</b>
-        <a href="Projects.html" target="_self">Projects</a>
+        <b>Main.cpp</b>
+        <a href="Projects.html" target="_self">Proyectos</a>
         <a href="curriculum.html" target="_self">CV</a>
-        <a href="About.html" target="_self">About</a>
+        <a href="About.html" target="_self">Sobre mí</a>
     </div>
 
     <div class="canvasbg" style="height: 300px;">
@@ -84,7 +84,7 @@
     <label style="display:block; text-align: center;" class="switch">
         <input type="checkbox" onclick="colorblindMode()">
         <span class="slider"></span>
-        Colorblindness
+        Modo para daltónicos
     </label>
     <br>
     <br>
@@ -92,23 +92,36 @@
 
     <div class="body">
         <h2 id="Contacto">
-            Contacto
+            Acerca de la página
         </h2>
         <p>
+            Esta página surgió de la necesidad de juntar todos mis proyectos en un único lugar. En vez de usar alguna
+            herramienta externa decidí desarrollar esta página por cuenta propia para mejorar mis escasos conocimientos de
+            desarrollo web. Finalmente, a la hora de hacer hacer la página decidí hacerla exclusivamente con html,
+            javascript y css puro. Principalmente, porque quería entender bien el funcionamiento de las bases de una
+            página web antes de aprender alguna biblioteca como Bootstrap. Esta página no es lo que se llamaría "responsive" vaya.<br>
+
+            <br>
+
+            Para hacer la página más interesante visualmente decidí añadir algunos elementos dinámicos. Estos elementos fueron
+            hechos con un canvas y javascript. Dichos elementos son, el visualizador de constelaciones y el tetris automático.
+            Destacar entre estos dos el tetris, con un mini algoritmo que coloca cada pieza en la mejor solución posible sin
+            contar giros, aunque no es del todo perfecto, pero bueno, nadie lo es. <br>
+<!-- 
             Correo: <a href="mailto:sryojhan@gmail.com">sryojhan@gmail.com</a>
             <br>
-            Número de teléfono: +34 634495950 
+            Número de teléfono: +34 634495950  -->
         </p>
 
     </div>
 
     <!-- <div style="height: 1000px;"></div> -->
 
-    <div class="footer">
-        <a href="http://u.gg" target="_blank">Unity</a>
+    <!-- <div class="footer">
+        <a href="http://u.gg" target="_blank">Contacto</a>
         <a href="images/background/background.png" download="hola">CV</a>
         <a href="curriculum.html" target="_blank">About</a>
-    </div>
+    </div> -->
 
     <script src="js/wordle.js"></script>
     <script src="js/dictionary.js"></script>

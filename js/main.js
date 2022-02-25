@@ -26,8 +26,8 @@ function onGoTop() {
  * Initialize the main properties
  */
 function init() {
-    this.goTopButton = document.getElementById("go_top");
-    this.goTopButton.style.display = "none";
+    setupFooter();
+    setupGoTop();
 
 
     const frameRate = 60;
@@ -70,3 +70,21 @@ function draw() {
     window.requestAnimationFrame(draw);
 }
 
+console.log("Welcome! :D");
+
+
+function setupFooter() {
+    document.body.innerHTML = document.body.innerHTML + 
+        '<div class="footer">' +
+        '<a href="http://u.gg" target="_blank">Contacto</a>' +
+        '<a href="images/background/background.png" download="hola">CV</a>' +
+        '<a href="curriculum.html" target="_blank">About</a>' +
+        '</div>';
+}
+
+function setupGoTop() {
+    document.body.innerHTML = '<button id="go_top" onclick="onGoTop()">&times;</button>' + document.body.innerHTML;
+    this.goTopButton = document.getElementById("go_top");
+    this.goTopButton.style.display = "none";
+
+}

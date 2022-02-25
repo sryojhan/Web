@@ -17,9 +17,9 @@ class ColorValues {
 
     //It is neccesary to use rgb because that is how color is internally stored
     static colors = [
-        "rgb(255, 93, 115)", "rgb(0, 0, 153)",
+        "rgb(119, 221, 119)", "rgb(0, 0, 153)",
         "rgb(100, 100, 100)", "rgb(100, 100, 100)",
-        "rgb(140, 33, 85)", "rgb(204, 153, 0)"
+        "rgb(255, 179, 71)", "rgb(204, 153, 0)"
     ];
 
     static toggleColorBlindness(value = null) {
@@ -128,7 +128,7 @@ class Wordle {
      */
     submitWord() {
         //If the worlde has been completed, pressing enter will restart it
-        if (this.currentWord > this.tries) {
+        if (this.currentWord >= this.tries) {
             this.setupWordle();
             return;
         }
@@ -138,7 +138,7 @@ class Wordle {
             //Check if the given word exists 
             if( !isAValidWord( this.word ) ){
 
-                console.log("The given word does not exist");
+                this.shake();
                 return;
             }
 
@@ -190,6 +190,9 @@ class Wordle {
             this.currentWord++;
             this.currentLetter = 0;
             this.word = "";
+        }
+        else{
+            this.shake();
         }
     }
 
@@ -256,6 +259,19 @@ class Wordle {
         if (idx > str.length - 1)
             return str;
         return str.substring(0, idx) + char + str.substring(idx + 1)
+    }
+
+    /**
+     * Shakes the wordle to give feedback to the player when a mistake has occurred
+     */
+    shake(){
+
+        let wordleClass = this.wordleClass;
+        wordleClass.style.animation = "shake .3s linear";
+        setTimeout(function(){
+            wordleClass.style.animation = "none";
+        }, 300);
+
     }
 
 }
