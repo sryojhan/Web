@@ -209,15 +209,15 @@ div.body p {
     font-family: 'Quicksand', sans-serif;
 }
 
-div.body p a {
+a {
     text-decoration: underline;
     text-decoration-color: black;
 }
 
-div.body p a:visited {
+a:visited {
     color: black;
 }
-div.body p a:link {
+ a:link {
     color: black;
 }
 
@@ -495,9 +495,7 @@ div.grupo{
 .busqueda{
     text-align: center; 
     width: 100%;
-    /* border: black; */
-    /* border: brown; */
-    /* background-color: grey; */
+
     height: 30px;
     margin-top: 50px;
     font-size: larger;
@@ -509,3 +507,15 @@ div.grupo{
 
 
 /* ---------------------------------------------------------------------------------------*/
+
+
+table.contact {
+    margin: auto;
+    font-family: 'Source Code Pro', monospace;
+    margin-top: 30px;
+}
+
+th, td {
+    padding-left: 15px;
+    padding-right: 15px;
+}
