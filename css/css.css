@@ -173,6 +173,14 @@ div.body h2 {
     
 }
 
+div.body h3 {
+    margin-top: 0cm;
+    text-align: left;
+    font-size: 1.30em;
+    font-weight: bolder;
+    font-family: 'Source Code Pro', monospace;
+    margin-bottom: 0%;
+}
 
 div.body h4 {
     margin-top: 0cm;
