@@ -231,6 +231,7 @@ div.footer {
     width: 100%;
     text-align: center;
     top: 20px;
+    top: 0%;
     position: relative;
 }
 
@@ -356,6 +357,9 @@ div.list_container{
     transition: 0.3s;
     padding: 0%;
     position: relative;
+
+    font-family: 'Quicksand', sans-serif;
+
 }
 
 .list_container li:hover{
@@ -393,16 +397,12 @@ div.list_container{
     position: relative;
     left: 25%;
     margin-left: 20px;
-    max-height: 10%;
-
-    font-size: 18px;
+    font-size: 15px;
 
     display: block;
     overflow:hidden;
     text-overflow:ellipsis;
     word-wrap:break-word;
-    max-height: 3em;
-    line-height: 1em;
 }
 
 
