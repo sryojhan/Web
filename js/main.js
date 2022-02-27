@@ -76,9 +76,9 @@ console.log("Welcome! :D");
 function setupFooter() {
     document.body.innerHTML = document.body.innerHTML + 
         '<div class="footer">' +
-        '<a href="http://u.gg" target="_blank">Contacto</a>' +
+        '<a href="curriculum.html">About</a>' +
         '<a href="images/background/background.png" download="hola">CV</a>' +
-        '<a href="curriculum.html" target="_blank">About</a>' +
+        '<a href="About.html#Contacto">Contacto</a>' +
         '</div>';
 }
 

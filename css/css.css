@@ -513,9 +513,26 @@ table.contact {
     margin: auto;
     font-family: 'Source Code Pro', monospace;
     margin-top: 30px;
+    table-layout: fixed;
 }
 
 th, td {
     padding-left: 15px;
     padding-right: 15px;
+}
+
+
+th {
+    font-weight: bolder;
+    width: 300px;
+    color: black;
+}
+
+
+td{
+    font-weight: bolder;
+    width: 300px;
+    color: black;
+    text-align: center;
+    text-decoration: underline;
 }
