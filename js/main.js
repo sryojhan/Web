@@ -76,14 +76,14 @@ console.log("Welcome! :D");
 function setupFooter() {
     document.body.innerHTML = document.body.innerHTML + 
         '<div class="footer">' +
-        '<a href="curriculum.html">About</a>' +
-        '<a href="images/background/background.png" download="hola">CV</a>' +
+        '<a href="index.html#Pagina">Sobre la página</a>' +
+        '<a href="images/background/background.png" download="hola">Foto de un delfín</a>' +
         '<a href="About.html#Contacto">Contacto</a>' +
         '</div>';
 }
 
 function setupGoTop() {
-    document.body.innerHTML = '<button id="go_top" onclick="onGoTop()">&times;</button>' + document.body.innerHTML;
+    document.body.innerHTML = '<button id="go_top" onclick="onGoTop()">&#8593;</button>' + document.body.innerHTML;
     this.goTopButton = document.getElementById("go_top");
     this.goTopButton.style.display = "none";
 
