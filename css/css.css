@@ -438,13 +438,17 @@ div.list_container{
     text-decoration: none;
 }
 
+
 .download{
     background: #2196F3;
+}
 
+.download texto, .repository texto, .processing texto{
+    color: white;
 }
 
 .processing{
-    background: #950740;
+    background: var(--main-color);
 }
 .repository{
     background: #04AA6D;
