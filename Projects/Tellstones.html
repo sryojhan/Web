@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <link rel="stylesheet" href="../css/css.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <link href="../images/favicon.ico" rel="icon">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="gamedev">
+    <meta name="descriptions" content="Game Developer portfolio">
+    <meta name="author" content="Yojhan">
+    <title>Tellstones</title>
+</head>
+
+<body onload="init();">
+
+    <div class="superior">
+    </div>
+    <div class="header">
+        <a href="../Projects.html" target="_self">Ver más proyectos</a>
+    </div>
+    <div class="body">
+        <h1>TELLSTONES</h1>
+        <hr>
+    </div>
+
+    <div style="margin-top: 40px;"></div>
+
+    <div class="body">
+        <p>
+            Este proyecto se trata de una adaptación del juego de mesa de Riot Games: <a href="https://www.tellstones.com/es-es/">Tellstones</a>. Consiste en un juego de memoria para dos
+            jugadores, donde ambos jugadores tienen que memorizar las posiciones de las fichas del tablero que ellos mismos van modificando.
+        </p>
+        <br>
+
+        
+        <div
+            style="position: relative; height: 200px; width: 100%; max-width: 700px; margin:auto; margin-top: 20px; margin-bottom: 50px;">
+            <div style="position: absolute; top:0; left: 0%; height: 100%; width: 200px;">
+                <img style="border-radius: 10px;" src="Icons/Tellstones.png" width="200px" height="200px">
+            </div>
+            <div style="position: absolute; height: 100%; width: calc(100% - 220px); right: 0%;">
+                <p style="text-align-last: left;">
+
+                    Este juego está hecho para Linux y se puede compilar usando Makefile. Hay que tener en cuenta que para su compilación es necesario tener
+                    instalado en la máquina g++ y SDL.
+                    El juego usa una topología cliente servidor usando el protocolo tcp. El jugador puede decidir si quiere crear un servidor o si por el contrario
+                    prefiere unirse a uno ya existente.
+                </p>
+               
+                <div style="position: absolute; bottom: 0;">
+                    <a class="download" download="nReinas" href="./Download/Tellstones.zip">Descargar el proyecto</a>
+                    <a class="download" download="nReinas" href="./Download/TellstonesCompilado.zip">Descargar versión compilada</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="parallax" style="padding: 40px;">
+        <p>
+            Capturas del juego
+        </p>
+    </div>
+
+    <div class="body">
+        <p style="margin-top: 15px; margin-bottom: 15px;">
+            En el juego contamos la <b>linea</b>. Las piezas que hay colocadas sobre la linea son las piezas que hay ahora mismo en juego.
+            En cada turno el jugador puede realizar una serie de movimientos, los cuales son: <b>colocar</b> una pieza sobre la linea, <b>intercambiar</b> de posicion
+            dos piezas de la linea, <b>voltear</b> boca abajo una pieza de la linea y por último <b>preguntar</b> al rival por una pieza que esté volteada. Si el rival 
+            acierta gana un punto, pero si lo falla lo ganamos nosotros.
+        </p>
+        <img class="screenshot" src="./Screenshots/Tellstones2.png"> 
+        <img class="screenshot" src="./Screenshots/Tellstones1.png"> 
+
+        <!-- <video controls>
+            <source src="./Videos/CTH.mp4">
+        </video> -->
+    </div>
+
+
+    <script src="../js/main.js"></script>
+</body>
+
+</html>

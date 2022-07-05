@@ -566,3 +566,15 @@ div.contacto{
     color: white;
 
 }
+
+
+/* ----------------------------------------------------------------------------------------*/
+
+img.screenshot{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    width: 50%;
+}
