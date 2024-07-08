@@ -23,8 +23,14 @@ class Dots {
         this.ctx.fillStyle = "rgba(255, 255, 255, 1)";
         this.ctx.save();
 
-        this.target_mouse_position = this.particles[0].pos;
-        document.addEventListener('mousemove', (event) => this.moveMouse(event));
+
+        this.particles[0].pos = null;
+        this.target_mouse_position = null;
+
+        this.lastKnownScroll = document.documentElement.scrollTop; 
+
+        document.addEventListener('mousemove', (event) => { this.moveMouse(event)});
+        document.addEventListener('scroll', (event) => { this.scrollPage(event)});
     }
 
     /**
@@ -63,6 +69,9 @@ class Dots {
 
         this.particles.forEach(function (value, idx, particleArray) {
 
+            if(value.pos === null)
+                return;
+
             let maxDistance = 100;
 
             if(idx == 0)
@@ -98,23 +107,32 @@ class Dots {
 
         let rect = this.canvas.getBoundingClientRect();
 
-
         let mouse_x = e.clientX - rect.left;
         let mouse_y = e.clientY - rect.top;
 
-
-        const { width, height } = this.canvas.getBoundingClientRect();
-
-
         this.target_mouse_position = new Vector(mouse_x, mouse_y);
-
     }
 
+    scrollPage(e){
+
+        let currentScroll = document.documentElement.scrollTop;
+        let dif = currentScroll - this.lastKnownScroll;
+
+        this.target_mouse_position.add(new Vector(0, dif));
+        this.lastKnownScroll = currentScroll;
+    }
 
 
     
 
     mouseDelay() {
+
+        if(this.target_mouse_position === null)
+            return;
+
+        if(this.particles[0].pos === null){
+            this.particles[0].pos = this.target_mouse_position;
+        }
 
         let lerp = function(start, end, amt) {
             return (1 - amt) * start + amt * end
@@ -138,7 +156,7 @@ class Particle {
         this.dir = Vector.unitCircle();
         this.size = size;
 
-        const speedVariance = 0.5;
+        const speedVariance = 0.3;
 
         let zOffset = (1 - speedVariance) + Math.random() * speedVariance;
     }

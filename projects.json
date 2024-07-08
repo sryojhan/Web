@@ -1,0 +1,154 @@
+{
+    "Love" : {
+        "name" : "Love Engine",
+        "description": "Motor de videojuegos en 3D con soporte de sripting en Lua. Love usa una arquitectura basada en componentes.",
+        "icon": "./Projects/Icons/Love_Icon.png",
+        "url": "./Projects/Love.html",
+        "target": "_self",
+
+
+        "group": "Destacados"
+    },
+    "Dome" : {
+        "name" : "DOME",
+        "description": "Juego 2D de exploración y gestión de recursos, desarrollado en C++ con SDL y una arquitectura basada en componentes.",
+        "icon": "./Projects/Icons/DOME_icon.png",
+        "url": "https://iquintasalt.github.io/DOME/",
+        "target": "_blank",
+
+
+        "group": null
+    },
+    "GungCho" : {
+        "name" : "Gung Cho'",
+        "description": "Plataformas de scroll vertical desarrollado en Unity. Llega a lo más alto de la montaña con la ayuda de un dash y un gancho.",
+        "icon": "Projects/Icons/GungCho_icon2.png",
+        "url": "https://proyectos1-fdi-ucm.github.io/c1920-Grupo06/",
+        "target": "_blank",
+
+
+        "group": null
+    },
+    "Tellstones" : {
+        "name" : "Tellstones",
+        "description": "Tellstones es un juego multijugador desarrollado para linux utilizando c, c++ y SDL.",
+        "icon": "./Projects/Icons/Tellstones.png",
+        "url": "./Projects/Tellstones.html",
+        "target": "_self",
+
+
+        "group": null
+    },
+
+    "CTH" : {
+        "name" : "Crunch Through Hell",
+        "description": "Crunch Through Hell es un juego de combate en tercera persona centrado en el combate contra bosses. Juego hecho con Love",
+        "icon": "./Projects/Icons/CTR_Icon.png",
+        "url": "https://triturados.github.io/Juego/",
+        "target": "_blank",
+
+
+        "group": "Juegos"
+    },
+
+    "ClimbTetris" : {
+        "name" : "Climb the tetris",
+        "description": "Dos jugadores tienen que colaborar para llegar lo más alto que puedan. Uno controla al jugador y otro controla las piezas que van cayendo al escenario",
+        "icon": "./Projects/Icons/CTT_Icon.png",
+        "url": "https://yojhan.itch.io/climb-the-tetris",
+        "target": "_blank",
+
+
+        "group": null
+    },
+
+    "KingRise" : {
+        "name" : "King Rise",
+        "description": "Gestiona recursos y mejora tu aldea para poder defenderte del ataque de tribus enemigas. Juego Web desarrollado en Phaser.",
+        "icon": "./Projects/Icons/KingRise_icon.png",
+        "url": "https://cool-videogames.github.io/King-Rise/",
+        "target": "_blank",
+
+
+        "group": null
+    },
+
+    "Mimigram" : {
+        "name" : "Mimigram",
+        "description": "Descubre cual es la imagen oculta en este pequeño juego de puzzles inspirado en el clásico Nonogram.",
+        "icon": "./Projects/Icons/Nonogram_Icon.png",
+        "url": "Projects/Mimigram.html",
+        "target": "_self",
+
+
+        "group": null
+    },
+
+    "Wordle" : {
+        "name" : "Wordle",
+        "description": "Una palabra, cinco letras, seis intentos. Intenta adivinar la palabra en este popular juego",
+        "icon": "Projects/Icons/Wordle_Icon.png",
+        "url": "index.html#Wordle",
+        "target": "_self",
+
+
+        "group": null
+    },
+
+    "Mimi" : {
+        "name" : "MIMI",
+        "description": "MIMI es un tranquilo juego de simulación dónde puedes decorar tu casa a medida que avanzas en la historia.",
+        "icon": "./Projects/Icons/MIMI_icon.png",
+        "url": "./Projects/MIMI.html",
+        "target": "_self",
+
+
+        "group": "En desarrollo"
+    },
+
+    "snake" : {
+        "name" : "Snake",
+        "description": "Intenta evitar chocar con tu propia cola mientras aumentas de tamaño en el clásico juego de la serpiente.",
+        "icon": "Projects/Icons/Snake_icon.png",
+        "url": "./Projects/Snake.html",
+        "target": "_self",
+
+
+        "group": "Juegos Clásicos"
+    },
+
+    "tetris" : {
+        "name" : "Tetris",
+        "description": "Convierte el orden en desorden en uno de los juegos de rompecabezas más famosos del mundo.",
+        "icon": "Projects/Icons/Tetris_Icon.png",
+        "url": "./Projects/Tetris.html",
+        "target": "_self",
+
+
+        "group": null
+    },
+
+    "nQueen" : {
+        "name" : "nReinas",
+        "description": "Clásico problema de programación, donde el objetivo es colocar en un tablero N reinas en un tablero de dimensiones NxN.",
+        "icon": "Projects/Icons/nReinas_Icon.png",
+        "url": "./Projects/nReinas.html",
+        "target": "_self",
+
+
+        "group": null
+    },
+
+    "sort" : {
+        "name" : "Algoritmos de ordenación",
+        "description": "Visualizador del proceso de ordenaciónde una variedad de algoritmos, todos hechos e implementados en Unity.",
+        "icon": "Projects/Icons/Sort_Icon.png",
+        "url": "./Projects/Ordenacion.html",
+        "target": "_self",
+
+
+        "group": null
+    }
+
+
+}

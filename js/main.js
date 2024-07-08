@@ -1,5 +1,14 @@
 
 
+// document.addEventListener("DOMContentLoaded", function() {
+//     // Obtener la URL actual
+//     const url = window.location.hash;
+
+//     // Verificar la URL y modificar el contenido según corresponda
+   
+//     console.log(url);
+// });
+
 //Use this callback to display or hide the go top button
 window.onscroll = function () {
 
@@ -33,6 +42,7 @@ function init() {
     const frameRate = 60;
     this.frameInterval = 1000 / frameRate;
     this.lastFrame = 0;
+
 }
 
 

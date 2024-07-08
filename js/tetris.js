@@ -7,7 +7,10 @@ class Tetris {
         let canvas = document.getElementById("canvas");
         this.ctx = canvas.getContext("2d");
 
+
+
         this.setCanvasStyle(canvas);
+
 
         this.changeBackground(canvas.toDataURL());
         this.createBoard();
@@ -41,6 +44,7 @@ class Tetris {
     }
 
     changeBackground(dataUrl) {
+
         this.list.style.backgroundImage = 'url(' + dataUrl + ')';
         this.list.style.backgroundPositionX = "center";
     }
@@ -50,7 +54,7 @@ class Tetris {
         
         this.board = new Array(this.width);
         this.pieceWidth = canvas.width / this.width;
-        this.height = Math.floor(canvas.height / this.pieceWidth);
+        this.height = Math.ceil(canvas.height / this.pieceWidth) + 1;
 
         //Initialize the 2d array to false
         for (let i = 0; i < this.width; i++) {
@@ -346,7 +350,7 @@ class Tetris {
 
         let posible = false;
         let finaloffset = -xmin;
-        let smallestHoleCount = 10;
+        let smallestHoleCount = Infinity;
 
         let maxHeight = this.height;
         for (let i = 0; i < this.width; i++) {
@@ -386,7 +390,7 @@ class Tetris {
                         let x = element.pos.x + xoffset;
                         let y = element.pos.y + yoffset;
 
-                        if (y < this.height - 2) { //If it is not in the ground
+                        if (y < this.height - 1) { //If it is not in the ground
                             if (!this.board[x][y + 1]) //if the place just below the block is not occupied, add a hole
                                 holes++;
                         }
@@ -438,11 +442,19 @@ class Block {
      * @returns returns true if the place is being occupied. False otherwise
      */
     check() {
-        if (this.pos.y == this.tetris.height - 2) {
+        if (this.pos.y == this.tetris.height + 2) {
+
             return true;
         }
 
+        /*
+            Colision con el suelo
+        */
+
         if (this.pos.y >= 0 && this.tetris.board[this.pos.x][this.pos.y + 1]) {
+
+
+            
             return true;
         }
 
