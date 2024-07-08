@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ProjectPageGenerator": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Users\\sryoj\\Documents\\Web\\ProjectContent"
+    }
+  }
+}

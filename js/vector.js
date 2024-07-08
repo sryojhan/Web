@@ -41,6 +41,14 @@ class Vector {
         this.y /= mgtd;
     }
 
+
+    multiply(numb){
+
+        this.x *= numb;
+        this.y *= numb;
+    }
+
+
     /**
      * Calculates the magnitude of the vector using Pithagoras threorem
      */

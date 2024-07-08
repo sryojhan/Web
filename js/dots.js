@@ -7,12 +7,14 @@
 class Dots {
     constructor() {
         let canvas = document.getElementById("canvas");
-        canvas.width = document.body.scrollWidth;;
+        canvas.width = document.body.scrollWidth;
 
         //Store information as an attribute
         this.canvas = canvas;
         this.width = canvas.width;
         this.height = canvas.height;
+
+
         this.ctx = canvas.getContext("2d");
         this.particles = [];
         this.createParticles(5000);
@@ -20,6 +22,9 @@ class Dots {
 
         this.ctx.fillStyle = "rgba(255, 255, 255, 1)";
         this.ctx.save();
+
+        this.target_mouse_position = this.particles[0].pos;
+        document.addEventListener('mousemove', (event) => this.moveMouse(event));
     }
 
     /**
@@ -27,7 +32,7 @@ class Dots {
      * on the size of the canvas
      * @param {number} particleDensity 
      */
-    createParticles(particleDensity){
+    createParticles(particleDensity) {
         let inv_density = particleDensity;
         let space = this.width * this.height;
         let size = Math.round(space / inv_density);
@@ -37,13 +42,17 @@ class Dots {
 
     }
 
-    
-    update() { 
+
+    update() {
         let width = this.width;
         let height = this.height;
         this.particles.forEach(function (value, idx) {
-            value.update(width, height);
+
+            if (idx != 0)
+                value.update(width, height);
         })
+
+        this.mouseDelay();
     }
 
     render() {
@@ -51,21 +60,28 @@ class Dots {
         let ctx = this.ctx;
         ctx.clearRect(0, 0, this.width, this.height);
 
+
         this.particles.forEach(function (value, idx, particleArray) {
 
-            for(let i = idx + 1; i < particleArray.length; i++) //Draw a line from every particle to the others
+            let maxDistance = 100;
+
+            if(idx == 0)
+                maxDistance = 120
+
+            for (let i = idx + 1; i < particleArray.length; i++) //Draw a line from every particle to the others
             {
                 let otro = particleArray[i];
-                ctx.beginPath();
 
-                const maxDistance = 100;
                 let dist = Vector.distance(value.pos, otro.pos);
 
                 if (dist < maxDistance) {  //Only draw the line passed a threshold
+                    ctx.beginPath();
                     ctx.moveTo(otro.pos.x, otro.pos.y);
                     ctx.lineTo(value.pos.x, value.pos.y);
 
+
                     let t = 1 - Math.pow(dist / maxDistance, 2); //The color of the line is proportional to the distance
+
                     ctx.strokeStyle = "rgba(255, 255, 255," + t + ")";
 
                     ctx.stroke();
@@ -76,6 +92,40 @@ class Dots {
             value.render(ctx);
         })
     }
+
+
+    moveMouse(e) {
+
+        let rect = this.canvas.getBoundingClientRect();
+
+
+        let mouse_x = e.clientX - rect.left;
+        let mouse_y = e.clientY - rect.top;
+
+
+        const { width, height } = this.canvas.getBoundingClientRect();
+
+
+        this.target_mouse_position = new Vector(mouse_x, mouse_y);
+
+    }
+
+
+
+    
+
+    mouseDelay() {
+
+        let lerp = function(start, end, amt) {
+            return (1 - amt) * start + amt * end
+        }
+
+        let x = lerp(this.particles[0].pos.x, this.target_mouse_position.x, 0.1);
+        let y = lerp(this.particles[0].pos.y, this.target_mouse_position.y, 0.1);
+
+        this.particles[0].pos =  new Vector(x, y);
+    }
+
 }
 
 /**
@@ -87,9 +137,14 @@ class Particle {
         this.pos = new Vector(x, y);
         this.dir = Vector.unitCircle();
         this.size = size;
+
+        const speedVariance = 0.5;
+
+        let zOffset = (1 - speedVariance) + Math.random() * speedVariance;
     }
 
     update(width, height) {
+
         this.pos.add(this.dir);
         this.clampBorders(width, height);
     }

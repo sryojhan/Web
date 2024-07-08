@@ -1,0 +1,15 @@
+C:\Users\sryoj\Documents\Web\ProjectPageGenerator\bin\Debug\net8.0\ProjectPageGenerator.exe
+C:\Users\sryoj\Documents\Web\ProjectPageGenerator\bin\Debug\net8.0\ProjectPageGenerator.deps.json
+C:\Users\sryoj\Documents\Web\ProjectPageGenerator\bin\Debug\net8.0\ProjectPageGenerator.runtimeconfig.json
+C:\Users\sryoj\Documents\Web\ProjectPageGenerator\bin\Debug\net8.0\ProjectPageGenerator.dll
+C:\Users\sryoj\Documents\Web\ProjectPageGenerator\bin\Debug\net8.0\ProjectPageGenerator.pdb
+C:\Users\sryoj\Documents\Web\ProjectPageGenerator\obj\Debug\net8.0\ProjectPageGenerator.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\sryoj\Documents\Web\ProjectPageGenerator\obj\Debug\net8.0\ProjectPageGenerator.AssemblyInfoInputs.cache
+C:\Users\sryoj\Documents\Web\ProjectPageGenerator\obj\Debug\net8.0\ProjectPageGenerator.AssemblyInfo.cs
+C:\Users\sryoj\Documents\Web\ProjectPageGenerator\obj\Debug\net8.0\ProjectPageGenerator.csproj.CoreCompileInputs.cache
+C:\Users\sryoj\Documents\Web\ProjectPageGenerator\obj\Debug\net8.0\ProjectPageGenerator.sourcelink.json
+C:\Users\sryoj\Documents\Web\ProjectPageGenerator\obj\Debug\net8.0\ProjectPageGenerator.dll
+C:\Users\sryoj\Documents\Web\ProjectPageGenerator\obj\Debug\net8.0\refint\ProjectPageGenerator.dll
+C:\Users\sryoj\Documents\Web\ProjectPageGenerator\obj\Debug\net8.0\ProjectPageGenerator.pdb
+C:\Users\sryoj\Documents\Web\ProjectPageGenerator\obj\Debug\net8.0\ProjectPageGenerator.genruntimeconfig.cache
+C:\Users\sryoj\Documents\Web\ProjectPageGenerator\obj\Debug\net8.0\ref\ProjectPageGenerator.dll
