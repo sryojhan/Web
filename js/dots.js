@@ -27,10 +27,10 @@ class Dots {
         this.particles[0].pos = null;
         this.target_mouse_position = null;
 
-        this.lastKnownScroll = document.documentElement.scrollTop; 
+        this.lastKnownScroll = document.documentElement.scrollTop;
 
-        document.addEventListener('mousemove', (event) => { this.moveMouse(event)});
-        document.addEventListener('scroll', (event) => { this.scrollPage(event)});
+        document.addEventListener('mousemove', (event) => { this.moveMouse(event) });
+        document.addEventListener('scroll', (event) => { this.scrollPage(event) });
     }
 
     /**
@@ -69,12 +69,12 @@ class Dots {
 
         this.particles.forEach(function (value, idx, particleArray) {
 
-            if(value.pos === null)
+            if (value.pos === null)
                 return;
 
             let maxDistance = 100;
 
-            if(idx == 0)
+            if (idx == 0)
                 maxDistance = 120
 
             for (let i = idx + 1; i < particleArray.length; i++) //Draw a line from every particle to the others
@@ -113,35 +113,36 @@ class Dots {
         this.target_mouse_position = new Vector(mouse_x, mouse_y);
     }
 
-    scrollPage(e){
+    scrollPage(e) {
 
         let currentScroll = document.documentElement.scrollTop;
         let dif = currentScroll - this.lastKnownScroll;
 
-        this.target_mouse_position.add(new Vector(0, dif));
+        if (this.target_mouse_position)
+            this.target_mouse_position.add(new Vector(0, dif));
         this.lastKnownScroll = currentScroll;
     }
 
 
-    
+
 
     mouseDelay() {
 
-        if(this.target_mouse_position === null)
+        if (this.target_mouse_position === null)
             return;
 
-        if(this.particles[0].pos === null){
+        if (this.particles[0].pos === null) {
             this.particles[0].pos = this.target_mouse_position;
         }
 
-        let lerp = function(start, end, amt) {
+        let lerp = function (start, end, amt) {
             return (1 - amt) * start + amt * end
         }
 
         let x = lerp(this.particles[0].pos.x, this.target_mouse_position.x, 0.1);
         let y = lerp(this.particles[0].pos.y, this.target_mouse_position.y, 0.1);
 
-        this.particles[0].pos =  new Vector(x, y);
+        this.particles[0].pos = new Vector(x, y);
     }
 
 }
@@ -153,7 +154,7 @@ class Particle {
 
     constructor(x, y, size) {
         this.pos = new Vector(x, y);
-        this.dir = Vector.unitCircle();
+        this.dir = Vector.unitCircumference();
         this.size = size;
 
         const speedVariance = 0.3;

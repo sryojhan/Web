@@ -15,6 +15,7 @@ class Vector {
     add(other) {
         this.x += other.x;
         this.y += other.y;
+        return this;
     }
     /**
      * Subtracts two vectors together in place
@@ -23,6 +24,7 @@ class Vector {
     subtract(other) {
         this.x -= other.x;
         this.y -= other.y;
+        return this;
     }
 
     /**
@@ -39,6 +41,8 @@ class Vector {
         let mgtd = this.magnitude();
         this.x /= mgtd;
         this.y /= mgtd;
+
+        return this;
     }
 
 
@@ -46,6 +50,7 @@ class Vector {
 
         this.x *= numb;
         this.y *= numb;
+        return this;
     }
 
 
@@ -75,11 +80,20 @@ class Vector {
     /**
      * Craate a random vector inside the unit circle
      */
-    static unitCircle() {
+    static unitCircumference() {
         let a = new Vector(-1 + Math.random() * 2, -1 + Math.random() * 2);
         a.normalize();
         return a;
     }
+
+
+    static unitCircle() {
+        let a = new Vector(-1 + Math.random() * 2, -1 + Math.random() * 2);
+        
+
+        return a;
+    }
+
 
     /**
      * Distance between two vectors
@@ -89,4 +103,21 @@ class Vector {
         v.subtract(b);
         return v.magnitude();
     }
+
+
+    getComponents(){
+        return [this.x, this.y];
+    }
+
+
+    static getAngle(a, b){
+
+        let normalized = a.clone().subtract(b).normalize();
+
+
+
+        return Math.atan2(normalized.y, normalized.x);
+
+    }
+
 }

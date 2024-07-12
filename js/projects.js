@@ -48,9 +48,9 @@ function populateProjects(data) {
         return '</div>';
     }
 
-    let SetProjectData = function (project) {
+    let SetProjectData = function (project, key) {
         return elementTemplate
-            .replace("$url", project.url)
+            .replace("$url", `./projectPage.html#${key}`)
             .replace("$icon", project.icon)
             .replace("$Description", project.description)
             .replace("$Name", project.name)
@@ -73,7 +73,7 @@ function populateProjects(data) {
             htmlData += OpenGroup(project.group);
         }
 
-        htmlData += SetProjectData(project);
+        htmlData += SetProjectData(project, key);
 
     });
     

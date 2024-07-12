@@ -1,14 +1,5 @@
 
 
-// document.addEventListener("DOMContentLoaded", function() {
-//     // Obtener la URL actual
-//     const url = window.location.hash;
-
-//     // Verificar la URL y modificar el contenido según corresponda
-   
-//     console.log(url);
-// });
-
 //Use this callback to display or hide the go top button
 window.onscroll = function () {
 
@@ -41,8 +32,11 @@ function init() {
 
     const frameRate = 60;
     this.frameInterval = 1000 / frameRate;
+    this.deltaTime = 1 / frameRate;
     this.lastFrame = 0;
 
+    this.anim = [];
+    window.requestAnimationFrame(draw);
 }
 
 
@@ -50,8 +44,7 @@ function init() {
  * Create dots animation
  */
 function drawDots() {
-    this.anim = new Dots();
-    window.requestAnimationFrame(draw);
+    this.anim.push(new Dots());
 }
 
 
@@ -59,9 +52,10 @@ function drawDots() {
  * Create tetris background
  */
 function drawTetris() {
-    this.anim = new Tetris();
-    window.requestAnimationFrame(draw);
+    this.anim.push(new Tetris());
 }
+
+
 
 /**
  * Animation loop
@@ -74,13 +68,16 @@ function draw() {
     if (dif > this.frameInterval) {
         this.lastFrame = time;
 
-        this.anim.update();
-        this.anim.render();
+        this.anim.forEach(element => {
+            
+            element.dt = this.deltaTime;
+            element.update();
+            element.render();
+
+        });
     }
     window.requestAnimationFrame(draw);
 }
-
-console.log("Welcome! :D");
 
 
 function setupFooter() {

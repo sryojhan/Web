@@ -17,7 +17,7 @@
     <title>Yojhan</title>
 </head>
 
-<body onload="init(); drawDots(); init_wordle()">
+<body onload="init(); drawDots(); init_wordle(); morphInit()">
     <!-- <button id="go_top" onclick="onGoTop()">&times;</button> -->
 
     <div class="superior">
@@ -71,9 +71,37 @@
 
     <div class="parallax" style="margin-top: 60px">
         <h2>
-            Lo más nuevo
+            Destacado
         </h2>
     </div>
+    
+    <div class="morph">
+
+        <div class="cluster"  data-offset="50" style="left: calc(50% - 807px); top: 146px;">
+            Shy engine 
+            <img src="Projects/Icons/MIMI_icon.png" width="00px">            
+        </div>
+
+        <div class="cluster"  data-offset="50" style="left: calc(50% - 380px); top: 528px;">
+            Everhood
+            <img src="Projects/Icons/MIMI_icon.png" width="00px">            
+        </div>
+
+        <div class="cluster"  data-offset="50" style="left: calc(50% + 346px); top: 95px;">
+            Pirates outlaws   
+            <img src="Projects/Icons/MIMI_icon.png" width="00px">          
+        </div>
+
+        
+        <div class="cluster"  data-offset="50" style="left: calc(50% + 905px); top: 489px;">
+            Parkitect    
+            <img src="Projects/Icons/MIMI_icon.png" width="00px">        
+        </div>
+        
+        <canvas id="morphCanvas"></canvas>
+    </div>
+
+    
     <div class="body">
 
         <h3 id="Wordle" style="margin: auto; text-align: center; margin-top: 20px; ">Wordle</h3>
@@ -99,6 +127,8 @@
         <span class="slider"></span>
         Modo para daltónicos
     </label>
+
+
     <br>
     <br>
     <br>
@@ -142,6 +172,7 @@
     <br>
 
     <script src="js/wordle.js"></script>
+    <script src="js/morph.js"></script>
     <script src="js/dictionary.js"></script>
     <script src="js/main.js"></script>
     <script src="js/dots.js"></script>

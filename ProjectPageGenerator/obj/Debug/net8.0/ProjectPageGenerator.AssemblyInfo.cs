@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProjectPageGenerator")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c198e04131eff2bdbff973627a5711493fbc7c1e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4e435d42e823e4733f2ffaad71992dd301077e07")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProjectPageGenerator")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProjectPageGenerator")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

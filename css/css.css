@@ -578,3 +578,21 @@ img.screenshot{
     margin-bottom: 7px;
     width: 50%;
 }
+
+
+
+div.morph{
+
+    position: relative;
+    width: auto;
+    height: 700px;
+    background-color: #e598ab;
+    color: white;
+}
+
+div.cluster{
+
+    position: absolute;
+    background-color: transparent;
+
+}
