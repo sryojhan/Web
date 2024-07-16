@@ -307,6 +307,9 @@ class Cluster {
 
     SetMain(element, canvas, morph) {
 
+        this.name = element.innerHTML;
+        this.name = this.name.substring(0, this.name.indexOf('<')).trim();
+
         this.morph = morph;
         this.dummie = false;
         this.element = element;
@@ -482,10 +485,9 @@ class Cluster {
 
                     if (isInside && this.isInside) {
 
-                        const insideTimeToExpand = this.insideTimeToExpand;
 
                         if (!this.isExpanding) {
-                            if (this.insideTimer > insideTimeToExpand) {
+                            if (this.insideTimer > this.insideTimeToExpand) {
 
                                 if (!this.isExpanding) {
                                     this.expandCompleted = false;
@@ -498,11 +500,12 @@ class Cluster {
                             } else {
 
                                 this.insideTimer += this.morph.dt;
-                                size.multiply(this.morph.lerp(1, this.insideExpansion, this.insideTimer / insideTimeToExpand));
+                                
                             }
                         }
 
                     } else {
+
 
                         this.insideTimer -= this.morph.dt;
 
@@ -516,6 +519,7 @@ class Cluster {
 
                         }
                     }
+                    size.multiply(this.morph.lerp(1, this.insideExpansion, this.insideTimer / this.insideTimeToExpand));
                 }
 
             }
