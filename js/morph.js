@@ -138,7 +138,7 @@ class Morph {
 
         });
 
-        if(this.expandingCluster){
+        if (this.expandingCluster) {
             this.expandingCluster.render();
         }
 
@@ -158,13 +158,13 @@ class Morph {
     }
 
 
-    createGradient(){
+    createGradient() {
 
         const gradientHeight = 500;
         this.ctx.globalCompositeOperation = 'destination-over';
 
-        
-        const grad= this.ctx.createLinearGradient(0, this.height - gradientHeight, 0, this.height);
+
+        const grad = this.ctx.createLinearGradient(0, this.height - gradientHeight, 0, this.height);
         grad.addColorStop(0, "#e598ab");
         grad.addColorStop(1, "white");
 
@@ -177,13 +177,13 @@ class Morph {
 
     }
 
-    createGradientDown(){
+    createGradientDown() {
 
-        if(this.expandingCluster && !this.expandingCluster.retract) return;
+        if (this.expandingCluster && !this.expandingCluster.retract) return;
 
         const downGradient = 50;
 
-        const grad= this.ctx.createLinearGradient(0, this.height - downGradient, 0, this.height);
+        const grad = this.ctx.createLinearGradient(0, this.height - downGradient, 0, this.height);
         grad.addColorStop(0, "rgba(255, 255, 255, 0)");
         //grad.addColorStop(0, "black");
         grad.addColorStop(1, "rgba(255, 255, 255, 255)");
@@ -354,10 +354,14 @@ class Cluster {
 
         this.image = element.children[0];
 
-        this.image.addEventListener("load", (e) => {this.imageLoaded = true;});
+        this.image.addEventListener("load", (e) => { this.imageLoaded = true; });
 
         this.expandTimer = 0;
         this.expandDuration = 0.5;
+
+
+        this.minialAlpha = 0.1;
+        this.maxAlpha = 0.9;
 
     }
 
@@ -383,9 +387,6 @@ class Cluster {
             var influenceX = Math.floor(this.pos.x / influenceSize);
             var influenceY = Math.floor(this.pos.y / influenceSize);
 
-            if (iterationCount >= iterationMax) {
-                console.log("toca repetir");
-            }
 
         } while (influenceMap[influenceX][influenceY] && iterationCount < iterationMax);
 
@@ -461,13 +462,7 @@ class Cluster {
 
                 let distanceFromCollisionPoint = 1 - (Math.abs(t - collisionPoint) / maxDistanceToCollision);
 
-                if (t > collisionPoint) {
-
-
-                }
-
-                if(!this.isExpanding || !this.expandCompleted)
-                {
+                if (!this.isExpanding || !this.expandCompleted) {
                     size.x = this.morph.lerp(size.x, size.x * maxStretch, distanceFromCollisionPoint);
                 }
                 pos = this.morph.vectorLerp(pos, mouse, easeInExpo(t));
@@ -541,8 +536,7 @@ class Cluster {
             this.morph.setFillColor("white");
         }
 
-        else
-        {
+        else {
             this.morph.setFillColor("black");
 
         }
@@ -552,34 +546,40 @@ class Cluster {
         this.renderPosition = pos;
         this.morph.drawCenteredEllipse(pos.x, pos.y, size.x, size.y, rot)
 
-        if(this.imageLoaded){
+        if (this.imageLoaded) {
 
             this.morph.ctx.save();
             //poner source over
             //Poner esto para la mascara
             this.morph.ctx.globalCompositeOperation = 'source-atop';
-            
-
-            let alpha = 0.1;
 
 
-            if(!this.isExpanding){
+            let alpha = this.minialAlpha;
+            const centerAlpha = (this.minialAlpha + this.maxAlpha) * 0.5;
 
-                alpha = this.morph.lerp(0.1, 0.5, this.insideTimer / this.insideTimeToExpand);
-            }else{
+            if (!this.isExpanding) {
 
-                if(this.retract){
 
-                    alpha = this.morph.lerp(0.1, 0.9, this.expandTimer / this.expandDuration);
+                alpha = this.morph.lerp(this.minialAlpha, centerAlpha, this.insideTimer / this.insideTimeToExpand);
 
-                }else{
+                let maxSize = Math.max(this.insideExpansion, this.maxStretch);
 
-                    alpha = this.morph.lerp(0.5, 0.9, this.expandTimer / this.expandDuration);
+                alpha = this.morph.lerp(this.minialAlpha, centerAlpha, ((size.x / this.size) - 1) / maxSize);
+
+            } else {
+
+                if (this.retract) {
+
+                    alpha = this.morph.lerp(this.minialAlpha, this.maxAlpha, this.expandTimer / this.expandDuration);
+
+                } else {
+
+                    alpha = this.morph.lerp(centerAlpha, this.maxAlpha, this.expandTimer / this.expandDuration);
                 }
 
             }
 
-            
+
 
             this.morph.ctx.globalAlpha = alpha;
 
@@ -588,8 +588,8 @@ class Cluster {
             let x = pos.x - imgSize;
             let y = pos.y - imgSize;
 
-            this.morph.ctx.drawImage(this.image, x, y, imgSize* 2, imgSize * 2)
-            
+            this.morph.ctx.drawImage(this.image, x, y, imgSize * 2, imgSize * 2)
+
             this.morph.ctx.restore();
             this.morph.ctx.globalCompositeOperation = 'source-over';
 
