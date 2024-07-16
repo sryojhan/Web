@@ -104,7 +104,6 @@ class Morph {
         this.ctx.clearRect(0, 0, this.width, this.height);
 
 
-        this.createGradient();
 
         this.dummies.forEach(element => {
 
@@ -125,11 +124,7 @@ class Morph {
 
             if (this.expandingCluster) {
 
-                if (this.expandingCluster === element) {
-
-                    element.render();
-                }
-                else {
+                if (this.expandingCluster !== element) {
 
                     if (this.expandingCluster.retract || !this.expandingCluster.expandCompleted) {
                         element.render();
@@ -143,6 +138,9 @@ class Morph {
 
         });
 
+        if(this.expandingCluster){
+            this.expandingCluster.render();
+        }
 
 
         if (this.target_mouse_position) {
@@ -152,6 +150,9 @@ class Morph {
             this.drawCenteredCircle(x, y, this.size);
         }
 
+
+        this.createGradient();
+
         this.createGradientDown();
         this.mouseJustdown = false;
     }
@@ -160,14 +161,19 @@ class Morph {
     createGradient(){
 
         const gradientHeight = 500;
+        this.ctx.globalCompositeOperation = 'destination-over';
 
-
+        
         const grad= this.ctx.createLinearGradient(0, this.height - gradientHeight, 0, this.height);
         grad.addColorStop(0, "#e598ab");
         grad.addColorStop(1, "white");
 
         this.ctx.fillStyle = grad;
         this.ctx.fillRect(0, this.height - gradientHeight, this.width, this.height);
+
+        this.ctx.restore();
+
+        this.ctx.globalCompositeOperation = 'source-over';
 
     }
 
@@ -219,6 +225,7 @@ class Morph {
         ctx.arc(x, y, rad, 0, 2 * Math.PI);
         ctx.fill();
 
+        ctx.closePath();
         //ctx.lineWidth = 4;
         //ctx.stroke();
 
@@ -233,11 +240,37 @@ class Morph {
         ctx.ellipse(x, y, radX, radY, rot, 0, Math.PI * 2)
 
         ctx.fill();
+        ctx.closePath();
 
         //ctx.lineWidth = 4;
         //ctx.stroke();
-
     }
+
+    beginEllipseMask(x, y, radX, radY, rot = 0) {
+
+        let ctx = this.ctx;
+
+        ctx.save();
+
+        ctx.beginPath();
+        ctx.ellipse(x, y, radX, radY, rot, 0, Math.PI * 2)
+        ctx.closePath();
+        ctx.clip();
+
+
+        //ctx.lineWidth = 4;
+        //ctx.stroke();
+    }
+
+    closeEllipseMask(x, y, radX, radY, rot = 0) {
+
+        let ctx = this.ctx;
+
+        ctx.restore();
+        //ctx.lineWidth = 4;
+        //ctx.stroke();
+    }
+
 
     isMouseJustPressed() {
         return this.mouseJustdown;
@@ -296,6 +329,7 @@ class Cluster {
         // this.pos.y = this.morph.height * 0.5 + this.pos.y * morph.height * 0.5;
 
         this.insideTimer = 0;
+        this.insideTimeToExpand = 0.5;
         this.insideExpansion = 2;
 
         this.isInside = false;
@@ -315,6 +349,16 @@ class Cluster {
         this.floatOffset = (Math.random() * this.offsetMaxAmmount);
 
         this.renderPosition = this.pos;
+
+        this.imageLoaded = false;
+
+        this.image = element.children[0];
+
+        this.image.addEventListener("load", (e) => {this.imageLoaded = true;});
+
+        this.expandTimer = 0;
+        this.expandDuration = 0.5;
+
     }
 
     SetDummie(morph, influenceMap, influenceSize) {
@@ -422,8 +466,10 @@ class Cluster {
 
                 }
 
-
-                size.x = this.morph.lerp(size.x, size.x * maxStretch, distanceFromCollisionPoint);
+                if(!this.isExpanding || !this.expandCompleted)
+                {
+                    size.x = this.morph.lerp(size.x, size.x * maxStretch, distanceFromCollisionPoint);
+                }
                 pos = this.morph.vectorLerp(pos, mouse, easeInExpo(t));
                 offset3d = this.morph.lerp(0, maxOffset3d, distanceFromCollisionPoint);
 
@@ -441,7 +487,7 @@ class Cluster {
 
                     if (isInside && this.isInside) {
 
-                        const insideTimeToExpand = .5;
+                        const insideTimeToExpand = this.insideTimeToExpand;
 
                         if (!this.isExpanding) {
                             if (this.insideTimer > insideTimeToExpand) {
@@ -493,16 +539,61 @@ class Cluster {
 
         if (this.morph.isMouseJustPressed() && !this.dummie) {
             this.morph.setFillColor("white");
-
         }
 
         else
+        {
             this.morph.setFillColor("black");
+
+        }
 
 
 
         this.renderPosition = pos;
         this.morph.drawCenteredEllipse(pos.x, pos.y, size.x, size.y, rot)
+
+        if(this.imageLoaded){
+
+            this.morph.ctx.save();
+            //poner source over
+            //Poner esto para la mascara
+            this.morph.ctx.globalCompositeOperation = 'source-atop';
+            
+
+            let alpha = 0.1;
+
+
+            if(!this.isExpanding){
+
+                alpha = this.morph.lerp(0.1, 0.5, this.insideTimer / this.insideTimeToExpand);
+            }else{
+
+                if(this.retract){
+
+                    alpha = this.morph.lerp(0.1, 0.9, this.expandTimer / this.expandDuration);
+
+                }else{
+
+                    alpha = this.morph.lerp(0.5, 0.9, this.expandTimer / this.expandDuration);
+                }
+
+            }
+
+            
+
+            this.morph.ctx.globalAlpha = alpha;
+
+            let imgSize = size.x;
+
+            let x = pos.x - imgSize;
+            let y = pos.y - imgSize;
+
+            this.morph.ctx.drawImage(this.image, x, y, imgSize* 2, imgSize * 2)
+            
+            this.morph.ctx.restore();
+            this.morph.ctx.globalCompositeOperation = 'source-over';
+
+        }
 
     }
 
@@ -531,13 +622,16 @@ class Cluster {
                 this.isExpanding = false;
                 this.morph.expandingCluster = null;
             }
-            var size = this.morph.lerp(this.morph.width, this.size, cubicEaseOut(this.retractTimer / retractDuration));
+            let t = cubicEaseOut(this.retractTimer / retractDuration);
+            var size = this.morph.lerp(this.morph.width, this.size, t);
+
+            this.expandTimer = this.expandDuration * (1 - t);
 
         } else {
 
 
 
-            const expandDuration = 0.5;
+            const expandDuration = this.expandDuration;
 
             if (this.expandTimer < expandDuration)
                 this.expandTimer += this.morph.dt;
