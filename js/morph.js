@@ -55,7 +55,7 @@ class Morph {
         */
 
 
-        this.size = 40;
+        this.size = 3;
         this.cluster = [];
         let clusters = document.getElementsByClassName("cluster");
         for (let i = 0; i < clusters.length; i++) {
@@ -360,6 +360,7 @@ class Cluster {
         this.image.addEventListener("load", (e) => { this.imageLoaded = true; });
 
         this.expandTimer = 0;
+        this.retractSpeed = 2;
         this.expandDuration = 0.5;
 
 
@@ -500,14 +501,14 @@ class Cluster {
                             } else {
 
                                 this.insideTimer += this.morph.dt;
-                                
+
                             }
                         }
 
                     } else {
 
 
-                        this.insideTimer -= this.morph.dt;
+                        this.insideTimer -= this.morph.dt * this.retractSpeed;
 
                         if (this.insideTimer <= 0)
                             this.insideTimer = 0;
@@ -519,11 +520,23 @@ class Cluster {
 
                         }
                     }
-                    size.multiply(this.morph.lerp(1, this.insideExpansion, this.insideTimer / this.insideTimeToExpand));
+
+                    if (!this.isExpanding)
+                        size.multiply(this.morph.lerp(1, this.insideExpansion, this.insideTimer / this.insideTimeToExpand));
                 }
 
             }
+            else
+                if (!this.dummie) {
 
+                    this.insideTimer -= this.morph.dt* this.retractSpeed;
+
+                    if (this.insideTimer <= 0)
+                        this.insideTimer = 0;
+
+                    if (!this.isExpanding)
+                        size.multiply(this.morph.lerp(1, this.insideExpansion, this.insideTimer / this.insideTimeToExpand));
+                }
         }
 
 
@@ -588,6 +601,9 @@ class Cluster {
             this.morph.ctx.globalAlpha = alpha;
 
             let imgSize = size.x;
+
+
+            
 
             let x = pos.x - imgSize;
             let y = pos.y - imgSize;

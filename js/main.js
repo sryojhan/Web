@@ -30,10 +30,11 @@ function init() {
     setupGoTop();
 
 
+    //Initial target frameRate
     const frameRate = 60;
     this.frameInterval = 1000 / frameRate;
     this.deltaTime = 1 / frameRate;
-    this.lastFrame = 0;
+    this.lastFrame = Date.now();
 
     this.anim = [];
     window.requestAnimationFrame(draw);
@@ -63,25 +64,25 @@ function drawTetris() {
 function draw() {
 
     let time = Date.now();
-    let dif = time - this.lastFrame;
+    this.deltaTime = (time - this.lastFrame) * 0.001;
 
-    if (dif > this.frameInterval) {
-        this.lastFrame = time;
+    this.lastFrame = time;
 
-        this.anim.forEach(element => {
-            
-            element.dt = this.deltaTime;
-            element.update();
-            element.render();
+    this.anim.forEach(element => {
 
-        });
-    }
+        element.dt = this.deltaTime;
+
+        element.update();
+        element.render();
+
+    });
+
     window.requestAnimationFrame(draw);
 }
 
 
 function setupFooter() {
-    document.body.innerHTML = document.body.innerHTML + 
+    document.body.innerHTML = document.body.innerHTML +
         '<div class="footer">' +
         '<a href="index.html#Pagina">Sobre la página</a>' +
         '<a href="images/background/background.png" download="hola">Foto de un delfín</a>' +

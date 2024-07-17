@@ -53,6 +53,11 @@ class Vector {
         return this;
     }
 
+    multiplyClone(numb){
+
+        return new Vector(this.x * numb, this.y * numb);
+    }
+
 
     /**
      * Calculates the magnitude of the vector using Pithagoras threorem

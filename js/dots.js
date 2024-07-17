@@ -42,7 +42,12 @@ class Dots {
         let inv_density = particleDensity;
         let space = this.width * this.height;
         let size = Math.round(space / inv_density);
-        let f = () => new Particle(-100 + Math.random() * (this.width + 200), -100 + Math.random() * (this.height + 200), 2);
+        let f = () => {
+            let p = new Particle(-100 + Math.random() * (this.width + 200), -100 + Math.random() * (this.height + 200), 2);
+
+            p.dots = this;
+            return p;
+        };
         for (let i = 0; i < size; i++)
             this.particles.push(f());
 
@@ -157,6 +162,8 @@ class Particle {
         this.dir = Vector.unitCircumference();
         this.size = size;
 
+        this.speed = 60;
+
         const speedVariance = 0.3;
 
         let zOffset = (1 - speedVariance) + Math.random() * speedVariance;
@@ -164,7 +171,10 @@ class Particle {
 
     update(width, height) {
 
-        this.pos.add(this.dir);
+        
+        let dir = this.dir.multiplyClone(this.dots.dt * this.speed);
+
+        this.pos.add(dir);
         this.clampBorders(width, height);
     }
 
