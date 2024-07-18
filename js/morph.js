@@ -627,16 +627,24 @@ class Cluster {
             let y = pos.y - imgSizeY;
 
 
-            if (this.isExpanding) {
+            if (this.isExpanding ) {
+
 
                 x = 0;
                 y = 0;
                 imgSizeX = this.morph.width * 0.5;
                 imgSizeY = this.morph.height * 0.5;
+                
+                this.morph.ctx.drawImage(this.image, x, y, imgSizeX * 2, imgSizeY * 2)
             }
 
+            else{
 
-            this.morph.ctx.drawImage(this.image, x, y, imgSizeX * 2, imgSizeY * 2)
+
+                this.morph.ctx.drawImage(this.image, x, y, imgSizeX * 2, imgSizeY * 2)
+
+            }
+
 
             this.morph.ctx.restore();
             this.morph.ctx.globalCompositeOperation = 'source-over';
