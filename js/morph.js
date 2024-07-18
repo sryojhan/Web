@@ -66,7 +66,7 @@ class Morph {
 
 
 
-        const influenceAreaBoxSize = 40;
+        const influenceAreaBoxSize = 50;
         const influenceWidth = Math.ceil(this.width / influenceAreaBoxSize);
         const influenceHeight = Math.ceil(this.height / influenceAreaBoxSize);
 
@@ -378,7 +378,7 @@ class Cluster {
 
 
         let iterationCount = -1;
-        const iterationMax = 10;
+        const iterationMax = 50;
         do {
 
             iterationCount++;
@@ -437,6 +437,8 @@ class Cluster {
 
         if (this.isExpanding) {
             size = this.expand();
+
+
         }
 
 
@@ -466,7 +468,8 @@ class Cluster {
 
                 let distanceFromCollisionPoint = 1 - (Math.abs(t - collisionPoint) / maxDistanceToCollision);
 
-                if (!this.isExpanding || !this.expandCompleted) {
+                if (!this.isExpanding) {
+                    
                     size.x = this.morph.lerp(size.x, size.x * maxStretch, distanceFromCollisionPoint);
                 }
                 pos = this.morph.vectorLerp(pos, mouse, easeInExpo(t));
@@ -475,10 +478,7 @@ class Cluster {
                 rot = Vector.getAngle(mouse, pos);
 
 
-                //Entran en contacto la esfera del raton con uno de los proyectos
-                if (Vector.distance(pos, mouse) < size.x + this.morph.size) {
 
-                }
 
                 if (!this.dummie) {
                     //TODO: tener en cuenta el tamaño para saber si se encuentra completamente dentro o no
@@ -503,6 +503,7 @@ class Cluster {
                                 this.insideTimer += this.morph.dt;
 
                             }
+
                         }
 
                     } else {
@@ -518,25 +519,43 @@ class Cluster {
                             this.isInside = false;
 
 
+
                         }
                     }
 
-                    if (!this.isExpanding)
+                    if (!this.isExpanding) {
+
                         size.multiply(this.morph.lerp(1, this.insideExpansion, this.insideTimer / this.insideTimeToExpand));
+
+
+                        if (size.x > this.morph.width)
+                            console.log(size.x);
+                    }
                 }
+
+
 
             }
             else
                 if (!this.dummie) {
 
-                    this.insideTimer -= this.morph.dt* this.retractSpeed;
+
+                    this.insideTimer -= this.morph.dt * this.retractSpeed;
 
                     if (this.insideTimer <= 0)
                         this.insideTimer = 0;
 
-                    if (!this.isExpanding)
+                    if (!this.isExpanding) {
+
                         size.multiply(this.morph.lerp(1, this.insideExpansion, this.insideTimer / this.insideTimeToExpand));
+
+
+                    }
                 }
+
+
+
+
         }
 
 
@@ -600,15 +619,24 @@ class Cluster {
 
             this.morph.ctx.globalAlpha = alpha;
 
-            let imgSize = size.x;
+            let imgSizeX = size.x;
+            let imgSizeY = size.x;
 
 
-            
+            let x = pos.x - imgSizeX;
+            let y = pos.y - imgSizeY;
 
-            let x = pos.x - imgSize;
-            let y = pos.y - imgSize;
 
-            this.morph.ctx.drawImage(this.image, x, y, imgSize * 2, imgSize * 2)
+            if (this.isExpanding) {
+
+                x = 0;
+                y = 0;
+                imgSizeX = this.morph.width * 0.5;
+                imgSizeY = this.morph.height * 0.5;
+            }
+
+
+            this.morph.ctx.drawImage(this.image, x, y, imgSizeX * 2, imgSizeY * 2)
 
             this.morph.ctx.restore();
             this.morph.ctx.globalCompositeOperation = 'source-over';

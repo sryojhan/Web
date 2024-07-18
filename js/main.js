@@ -31,9 +31,8 @@ function init() {
 
 
     //Initial target frameRate
-    const frameRate = 60;
-    this.frameInterval = 1000 / frameRate;
-    this.deltaTime = 1 / frameRate;
+    this.frameRate = 60;
+    this.deltaTime = 1 / this.frameRate;
     this.lastFrame = Date.now();
 
     this.anim = [];
@@ -67,6 +66,11 @@ function draw() {
     this.deltaTime = (time - this.lastFrame) * 0.001;
 
     this.lastFrame = time;
+
+    if(this.deltaTime > 1){
+        
+        this.deltaTime = 1 / this.frameRate;
+    }
 
     this.anim.forEach(element => {
 

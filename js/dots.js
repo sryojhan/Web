@@ -31,6 +31,7 @@ class Dots {
 
         document.addEventListener('mousemove', (event) => { this.moveMouse(event) });
         document.addEventListener('scroll', (event) => { this.scrollPage(event) });
+
     }
 
     /**
@@ -171,7 +172,7 @@ class Particle {
 
     update(width, height) {
 
-        
+
         let dir = this.dir.multiplyClone(this.dots.dt * this.speed);
 
         this.pos.add(dir);
