@@ -17,7 +17,7 @@
     <title>Yojhan</title>
 </head>
 
-<body onload="init(); drawDots(); init_wordle(); morphInit()">
+<body onload="init(); drawDots(); init_wordle(); ">
     <!-- <button id="go_top" onclick="onGoTop()">&times;</button> -->
 
     <div class="superior">
@@ -75,29 +75,8 @@
         </h2>
     </div>
     
-    <div class="morph">
+    <div id="morph" class="morph">
 
-        <div class="cluster"  data-offset="50" style="left: calc(50% - 807px); top: 146px;">
-            Shy engine 
-            <img src="Projects/Icons/MIMI_icon.png" width="00px">            
-        </div>
-
-        <div class="cluster"  data-offset="50" style="left: calc(50% - 380px); top: 528px;">
-            Everhood
-            <img src="Projects/Background/Everhood.jpg" width="00px">            
-        </div>
-
-        <div class="cluster"  data-offset="50" style="left: calc(50% + 346px); top: 95px;">
-            Pirates outlaws   
-            <img src="Projects/Background/Pirates.jpg" width="00px">          
-        </div>
-
-        
-        <div class="cluster"  data-offset="50" style="left: calc(50% + 905px); top: 489px;">
-            Parkitect    
-            <img src="Projects/Background/Parkitect.jpeg" width="00px">        
-        </div>
-        
         <canvas id="morphCanvas"></canvas>
     </div>
 

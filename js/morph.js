@@ -1,7 +1,58 @@
 
+
+document.addEventListener("animationPrepared", function () {
+
+    fetch('./showcase.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error al cargar el archivo JSON');
+            }
+            return response.json();
+        })
+        .then(data => {
+
+            loadClusters(data);
+            morphInit();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+});
+
+
+function loadClusters(data){
+
+
+    const template = `
+    <div class="cluster" style="left: calc(50% + $leftpx); top: $toppx;">
+        $name
+        <img src="$icon" width="00px">
+        <img src="$background" width="00px">
+    </div>`;
+
+    let morph = document.getElementById("morph");
+
+
+    data.projects.forEach((element) => {
+
+
+        morph.innerHTML = template
+        .replace('$left', element.x.toString())
+        .replace('$top', element.y.toString())
+        .replace('$name', element.name)
+        .replace('$icon', element.iconImg)
+        .replace('$background', element.backgroundImg) + morph.innerHTML;
+
+
+    });
+
+}
+
+
 function morphInit() {
 
-    this.anim.push(new Morph());
+    anim.push(new Morph());
     addEventListener("resize", (event) => { onWindowResize(); });
 }
 
@@ -353,11 +404,19 @@ class Cluster {
 
         this.renderPosition = this.pos;
 
-        this.imageLoaded = false;
 
         this.image = element.children[0];
 
-        this.image.addEventListener("load", (e) => { this.imageLoaded = true; });
+        if (this.image.complete) {
+
+            this.imageLoaded = true;
+        } else {
+            this.imageLoaded = false;
+            this.image.addEventListener("load", (e) => {
+
+                this.imageLoaded = true;
+            });
+        }
 
         this.expandTimer = 0;
         this.retractSpeed = 2;
@@ -469,7 +528,7 @@ class Cluster {
                 let distanceFromCollisionPoint = 1 - (Math.abs(t - collisionPoint) / maxDistanceToCollision);
 
                 if (!this.isExpanding) {
-                    
+
                     size.x = this.morph.lerp(size.x, size.x * maxStretch, distanceFromCollisionPoint);
                 }
                 pos = this.morph.vectorLerp(pos, mouse, easeInExpo(t));
@@ -584,6 +643,7 @@ class Cluster {
 
         if (this.imageLoaded) {
 
+
             this.morph.ctx.save();
             //poner source over
             //Poner esto para la mascara
@@ -627,18 +687,18 @@ class Cluster {
             let y = pos.y - imgSizeY;
 
 
-            if (this.isExpanding ) {
+            if (this.isExpanding) {
 
 
                 x = 0;
                 y = 0;
                 imgSizeX = this.morph.width * 0.5;
                 imgSizeY = this.morph.height * 0.5;
-                
+
                 this.morph.ctx.drawImage(this.image, x, y, imgSizeX * 2, imgSizeY * 2)
             }
 
-            else{
+            else {
 
 
                 this.morph.ctx.drawImage(this.image, x, y, imgSizeX * 2, imgSizeY * 2)

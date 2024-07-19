@@ -36,7 +36,12 @@ function init() {
     this.lastFrame = Date.now();
 
     this.anim = [];
+
+    anim = this.anim;
     window.requestAnimationFrame(draw);
+
+
+    document.dispatchEvent(new CustomEvent('animationPrepared'));
 }
 
 
