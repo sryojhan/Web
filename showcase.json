@@ -1,6 +1,10 @@
 {
 
+    "default": {
 
+        "title": "Project showcase"
+
+    },
 
     "projects": [
 
@@ -30,7 +34,7 @@
             "x": 905,
             "y": 489,
             "iconImg": "Projects/Background/Parkitect.jpeg",
-            "backgroundImg": "Projects/Background/Parkitect.jpeg"
+            "backgroundImg": "Projects/Background/ParkitectBackgroud.jpg"
         },
         {
             "name": "Love Engine",

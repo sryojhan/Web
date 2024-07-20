@@ -12,7 +12,7 @@ document.addEventListener("animationPrepared", function () {
         .then(data => {
 
             loadClusters(data);
-            morphInit();
+            morphInit(data);
         })
         .catch(error => {
             console.error('Error:', error);
@@ -21,7 +21,7 @@ document.addEventListener("animationPrepared", function () {
 });
 
 
-function loadClusters(data){
+function loadClusters(data) {
 
 
     const template = `
@@ -38,11 +38,11 @@ function loadClusters(data){
 
 
         morph.innerHTML = template
-        .replace('$left', element.x.toString())
-        .replace('$top', element.y.toString())
-        .replace('$name', element.name)
-        .replace('$icon', element.iconImg)
-        .replace('$background', element.backgroundImg) + morph.innerHTML;
+            .replace('$left', element.x.toString())
+            .replace('$top', element.y.toString())
+            .replace('$name', element.name)
+            .replace('$icon', element.iconImg)
+            .replace('$background', element.backgroundImg) + morph.innerHTML;
 
 
     });
@@ -50,9 +50,9 @@ function loadClusters(data){
 }
 
 
-function morphInit() {
+function morphInit(data) {
 
-    anim.push(new Morph());
+    anim.push(new Morph(data));
     addEventListener("resize", (event) => { onWindowResize(); });
 }
 
@@ -66,10 +66,12 @@ function onWindowResize() {
     }
 }
 
+
+
 class Morph {
 
 
-    constructor() {
+    constructor(data) {
 
         let canvas = document.getElementById("morphCanvas");
         this.canvas = canvas;
@@ -89,21 +91,13 @@ class Morph {
         this.mouseJustdown = false;
         this.mouseClicked = false;
         this.target_mouse_position = null;
+        this.lastKnownScroll = document.documentElement.scrollTop;
+
         document.addEventListener('mousemove', (event) => { this.moveMouse(event) });
         document.addEventListener('mousedown', (event) => this.onMouseDown());
         document.addEventListener('mouseup', (event) => this.onMouseUp());
 
-
-        /*
-        
-        
-        TODO:  
-        poner source over
-
-        //Poner esto para la mascara
-        ctx1.globalCompositeOperation = 'source-in';
-
-        */
+        document.addEventListener('scroll', (event) => this.onPageScroll());
 
 
         this.size = 3;
@@ -111,7 +105,8 @@ class Morph {
         let clusters = document.getElementsByClassName("cluster");
         for (let i = 0; i < clusters.length; i++) {
             let c = new Cluster();
-            c.SetMain(clusters[i], canvas, this);
+            c.SetMain(clusters[i], canvas, data.projects[clusters.length - 1 - i], this);
+
             this.cluster.push(c);
         }
 
@@ -132,6 +127,8 @@ class Morph {
             this.dummies.push(c)
         }
 
+
+        this.htmlManager = new MorphHTMLManager(data);
     }
 
 
@@ -268,6 +265,17 @@ class Morph {
         this.mouseClicked = false;
     }
 
+
+    onPageScroll() {
+
+        let currentScroll = document.documentElement.scrollTop;
+        let dif = currentScroll - this.lastKnownScroll;
+
+        if (this.target_mouse_position)
+            this.target_mouse_position.add(new Vector(0, dif));
+        this.lastKnownScroll = currentScroll;
+    }
+
     drawCenteredCircle(x, y, rad = 40) {
 
         let ctx = this.ctx;
@@ -356,10 +364,9 @@ class Cluster {
 
 
 
-    SetMain(element, canvas, morph) {
+    SetMain(element, canvas, data, morph) {
 
-        this.name = element.innerHTML;
-        this.name = this.name.substring(0, this.name.indexOf('<')).trim();
+        this.data = data;
 
         this.morph = morph;
         this.dummie = false;
@@ -405,25 +412,16 @@ class Cluster {
         this.renderPosition = this.pos;
 
 
-        this.image = element.children[0];
+        this.icon = new MorphImage(element.children[0]);
+        this.background = new MorphImage(element.children[1]);
 
-        if (this.image.complete) {
-
-            this.imageLoaded = true;
-        } else {
-            this.imageLoaded = false;
-            this.image.addEventListener("load", (e) => {
-
-                this.imageLoaded = true;
-            });
-        }
 
         this.expandTimer = 0;
         this.retractSpeed = 2;
         this.expandDuration = 0.5;
 
 
-        this.minialAlpha = 0.1;
+        this.minialAlpha = 0.2;
         this.maxAlpha = 0.9;
 
     }
@@ -496,8 +494,6 @@ class Cluster {
 
         if (this.isExpanding) {
             size = this.expand();
-
-
         }
 
 
@@ -557,6 +553,7 @@ class Cluster {
                                 this.retract = false;
                                 this.isExpanding = true;
                                 this.morph.expandingCluster = this;
+                                this.morph.htmlManager.loadProject(this.data);
                             } else {
 
                                 this.insideTimer += this.morph.dt;
@@ -641,7 +638,13 @@ class Cluster {
         this.renderPosition = pos;
         this.morph.drawCenteredEllipse(pos.x, pos.y, size.x, size.y, rot)
 
-        if (this.imageLoaded) {
+
+        if (!this.dummie) {
+
+
+            let iconImage = this.icon.get();
+            let backgroundImage = this.icon.get();
+
 
 
             this.morph.ctx.save();
@@ -666,7 +669,7 @@ class Cluster {
 
                 if (this.retract) {
 
-                    alpha = this.morph.lerp(this.minialAlpha, this.maxAlpha, this.expandTimer / this.expandDuration);
+                    alpha = this.morph.lerp(0, this.maxAlpha, this.expandTimer / this.expandDuration);
 
                 } else {
 
@@ -690,26 +693,43 @@ class Cluster {
             if (this.isExpanding) {
 
 
-                x = 0;
-                y = 0;
-                imgSizeX = this.morph.width * 0.5;
-                imgSizeY = this.morph.height * 0.5;
+                let background_x = 0;
+                let background_y = 0;
+                let background_imgSizeX = this.morph.width * 0.5;
+                let background_imgSizeY = this.morph.height * 0.5;
 
-                this.morph.ctx.drawImage(this.image, x, y, imgSizeX * 2, imgSizeY * 2)
+                if (backgroundImage !== null)
+                    this.morph.ctx.drawImage(backgroundImage, background_x, background_y, background_imgSizeX * 2, background_imgSizeY * 2)
+
+                if (this.retract) {
+
+
+                    this.morph.ctx.globalAlpha = (1 - alpha) * this.minialAlpha;
+
+
+                    if (iconImage !== null)
+                        this.morph.ctx.drawImage(iconImage, x, y, imgSizeX * 2, imgSizeY * 2)
+
+                }
+
             }
 
             else {
 
 
-                this.morph.ctx.drawImage(this.image, x, y, imgSizeX * 2, imgSizeY * 2)
+                if (iconImage !== null)
+                    this.morph.ctx.drawImage(iconImage, x, y, imgSizeX * 2, imgSizeY * 2)
 
             }
+
+
 
 
             this.morph.ctx.restore();
             this.morph.ctx.globalCompositeOperation = 'source-over';
 
         }
+
 
     }
 
@@ -725,11 +745,32 @@ class Cluster {
             this.retractTimer = 0;
         }
 
-        if (this.retract) {
+        if (!this.retract) {
+
+            const expandDuration = this.expandDuration;
+
+            if (this.expandTimer < expandDuration)
+                this.expandTimer += this.morph.dt;
+            else {
+
+
+                if (!this.expandCompleted) {
+
+                    this.expandCompleted = true;
+
+                }
+
+
+            }
+
+
+            size = this.morph.lerp(this.size, this.morph.width, cubicEaseOut(this.expandTimer / expandDuration));
+
+
+        } else {
 
             const retractDuration = 0.9;
             this.retractTimer += this.morph.dt;
-
 
             if (this.retractTimer > retractDuration) {
 
@@ -737,27 +778,13 @@ class Cluster {
                 this.retract = false;
                 this.isExpanding = false;
                 this.morph.expandingCluster = null;
+
+                this.morph.htmlManager.unloadProject();
             }
             let t = cubicEaseOut(this.retractTimer / retractDuration);
             var size = this.morph.lerp(this.morph.width, this.size, t);
 
             this.expandTimer = this.expandDuration * (1 - t);
-
-        } else {
-
-
-
-            const expandDuration = this.expandDuration;
-
-            if (this.expandTimer < expandDuration)
-                this.expandTimer += this.morph.dt;
-            else {
-                this.expandCompleted = true;
-            }
-
-
-
-            size = this.morph.lerp(this.size, this.morph.width, cubicEaseOut(this.expandTimer / expandDuration));
         }
 
         this.morph.setFillColor("black");
@@ -783,5 +810,69 @@ class Cluster {
             this.element.style.display = "none";
         else
             this.element.style.display = "block";
+    }
+}
+
+
+
+class MorphImage {
+
+
+    constructor(image) {
+        this.image = image;
+
+        this.loaded = image.complete;
+
+        if (this.image.complete) {
+
+            this.loaded = true;
+        } else {
+            this.loaded = false;
+            this.image.addEventListener("load", (e) => {
+
+                this.loaded = true;
+            });
+        }
+    }
+
+
+    get() {
+        if (this.loaded)
+            return this.image;
+        return null;
+    }
+
+
+}
+
+
+
+class MorphHTMLManager {
+
+
+    constructor(data) {
+
+        this.data = data;
+        this.title = document.getElementById('morphTitle');
+
+
+        this.unloadProject();
+    }
+
+
+    setTitle(txt) {
+        this.title.innerHTML = txt;
+    }
+
+    unloadProject() {
+
+        this.setTitle(this.data.default.title);
+    }
+
+
+    loadProject(data) {
+
+
+        this.setTitle(data.name);
     }
 }
