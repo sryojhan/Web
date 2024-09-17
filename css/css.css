@@ -81,6 +81,7 @@ div.superior {
     background-image: url("../images/background/ghosts.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
     height: 300px;
     padding: 5%;
     position: relative;
@@ -428,7 +429,7 @@ div.list_container{
 }
 /* ---------------------------------------------------------------------------------------*/
 
-.download, .repository, .processing{
+.download, .repository, .processing, .itchio{
     display: inline-block;
     width: auto;
     height: auto;
@@ -443,7 +444,7 @@ div.list_container{
     background: #2196F3;
 }
 
-.download texto, .repository texto, .processing texto{
+.download texto, .repository texto, .processing texto, .itchio texto{
     color: white;
 }
 
@@ -454,7 +455,11 @@ div.list_container{
     background: #04AA6D;
 }
 
-.download:hover, .repository:hover, .processing:hover{
+.itchio{
+    background: #fc567f;
+}
+
+.download:hover, .repository:hover, .processing:hover, .itchio:hover{
     background: gray;
     color:black;
 }

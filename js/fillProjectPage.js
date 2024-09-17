@@ -28,14 +28,19 @@ function LoadProject(project) {
 
     if (!project) {
         window.location.href = "./projects.html";
+
+        console.log("proyecto no encontrado");
         return;
     }
+
+
     document.title = project.name;
 
     if (!project.page) {
         return;
     }
     //Page content
+
 
     function InsertHtmlElement(id, content) {
 
@@ -65,6 +70,11 @@ function LoadProject(project) {
 
     //Page multimedia
 
+
+    //console.log(document.getElementById("banner").style);
+    if(project.page.banner)
+    document.getElementById("banner").style.backgroundImage = 'url("' +  project.page.banner +  '")';
+
     document.getElementById("projectIcon").src = project.icon;
 
     let multimedia = "";
@@ -80,7 +90,7 @@ function LoadProject(project) {
         multimedia += videoTemplate.replace("$source", project.pageVideo);
 
     if (project.page.screenshots)
-        project.screenshots.forEach(element => {
+        project.page.screenshots.forEach(element => {
 
             multimedia += screenshotTemplate.replace("$source", element);
         });

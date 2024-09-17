@@ -19,7 +19,7 @@
 
 <body onload="init();">
 
-    <div class="superior">
+    <div id="banner" class="superior">
     </div>
     <div class="header">
         <a href="../Projects.html" target="_self">Ver más proyectos</a>
@@ -46,7 +46,7 @@
         <div
             style="position: relative; height: 200px; width: 100%; max-width: 700px; margin:auto; margin-top: 20px; margin-bottom: 50px;">
             <div style="position: absolute; top:0; left: 0%; height: 100%; width: 200px;">
-                <img id="projectIcon" style="border-radius: 10px;" src="Icons/Love_Icon.png" width="200px"
+                <img id="projectIcon" style="border-radius: 10px;" src="Projects/Icons/Love_Icon.png" width="200px"
                     height="200px">
             </div>
             <div style="position: absolute; height: 100%; width: calc(100% - 220px); right: 0%;">
@@ -56,13 +56,16 @@
 
                 <div style="position: absolute; bottom: 0;">
                     <a class="repository" href="https://github.com/Triturados/Motor">
-                        <texto>Ver el código en GitHub</texto>
+                        <texto>GitHub</texto>
                     </a>
-                    <a class="download" download="Snake" href="./Download/Snake.zip">
-                        <texto>Descargar</texto>
+                    <a class="download" download href="./Download/Snake.zip">
+                        <texto>Download</texto>
                     </a>
-                    <a class="processing" download="Snake" href="./Download/Snake.zip">
-                        <texto>Descargar (Processing)</texto>
+                    <a class="processing" download" href="./Download/Snake.zip">
+                        <texto>View external site</texto>
+                    </a>
+                    <a class="itchio" download href="./Download/Snake.zip">
+                        <texto>Itch.io</texto>
                     </a>
                 </div>
 
@@ -86,8 +89,8 @@
     </div>
 
 
-    <script src="../js/main.js"></script>
-    <script src="../js/fillProjectPage.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/fillProjectPage.js"></script>
 </body>
 
 </html>

@@ -29,7 +29,7 @@ function populateProjects(data) {
     `;
     let elementTemplate = `<a target='$target' href='$url'>
     <li>
-        <img style='border-radius: 10px;' src='$icon'>
+        <img style='border-radius: 10px; ' src='$icon'>
         <h1>$Name</h1>
         <p>$Description</p>
     </li>

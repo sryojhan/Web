@@ -21,6 +21,10 @@ document.addEventListener("animationPrepared", function () {
 });
 
 
+/*
+    Leer los datos del json para iniciar los proyectos destacados
+*/
+
 function loadClusters(data) {
 
 
@@ -96,7 +100,6 @@ class Morph {
         document.addEventListener('mousemove', (event) => { this.moveMouse(event) });
         document.addEventListener('mousedown', (event) => this.onMouseDown());
         document.addEventListener('mouseup', (event) => this.onMouseUp());
-
         document.addEventListener('scroll', (event) => this.onPageScroll());
 
 
@@ -105,13 +108,21 @@ class Morph {
         let clusters = document.getElementsByClassName("cluster");
         for (let i = 0; i < clusters.length; i++) {
             let c = new Cluster();
-            c.SetMain(clusters[i], canvas, data.projects[clusters.length - 1 - i], this);
+
+            //Iniciar cada cluster con sus datos
+            c.SetMain(clusters[i], canvas, data.projects[clusters.length - 1 - i /* El orden se invierte porque se crean al reves*/], this);
 
             this.cluster.push(c);
         }
 
 
 
+
+        /*
+            Poner particulas falsas para rellenar el fondo
+
+            Tienen un mapa de influencia para bajar la probabilidad de que salgan muy pegadas en la misma zona
+        */
         const influenceAreaBoxSize = 50;
         const influenceWidth = Math.ceil(this.width / influenceAreaBoxSize);
         const influenceHeight = Math.ceil(this.height / influenceAreaBoxSize);
@@ -137,13 +148,7 @@ class Morph {
         this.cluster.forEach(element => {
 
             element.update();
-
-
         });
-
-        // if (this.isMouseJustPressed()) {
-        //     console.log(`${this.target_mouse_position.x - this.width * 0.5}, ${this.target_mouse_position.y}`);
-        // }
 
     }
 
@@ -152,7 +157,9 @@ class Morph {
         this.ctx.clearRect(0, 0, this.width, this.height);
 
 
-
+        /*
+            Las particulas de relleno tienen la menor importancia por lo que se pintan las últimas
+        */
         this.dummies.forEach(element => {
 
             if (this.expandingCluster) {
@@ -166,7 +173,13 @@ class Morph {
         });
 
 
+        /*
+            Pintar todos los cluster.
 
+            Si hay un cluster seleccionado, solo se pinta si el cluster seleccionado se esta expandiendo o contrayendo
+            En caso de que haya un cluster seleccionado, este se pinta el último para que se vea por encima de los demás
+
+        */
         this.cluster.forEach(element => {
 
 
@@ -191,6 +204,10 @@ class Morph {
         }
 
 
+
+        /*
+            Por último, pintar una esfera para representar al raton
+        */
         if (this.target_mouse_position) {
 
             let [x, y] = this.target_mouse_position.getComponents();
@@ -199,8 +216,10 @@ class Morph {
         }
 
 
+        /*
+            Pintar los graidentes del fondo
+        */
         this.createGradient();
-
         this.createGradientDown();
         this.mouseJustdown = false;
     }
@@ -209,6 +228,10 @@ class Morph {
     createGradient() {
 
         const gradientHeight = 500;
+
+        /*
+            Pintar el gradiente por debajo de lo que hay ya seleccionado
+        */
         this.ctx.globalCompositeOperation = 'destination-over';
 
 
@@ -362,9 +385,13 @@ class Morph {
 
 class Cluster {
 
-
+    /*
+        Constructora para cada cluster de proyecto
+    */
 
     SetMain(element, canvas, data, morph) {
+
+
 
         this.data = data;
 
@@ -383,11 +410,6 @@ class Cluster {
             rect.left - canvasRect.left + this.width * 0.5,
             rect.top - canvasRect.top + this.height * 0.5
         );
-
-
-        // this.pos = Vector.unitCircle();
-        // this.pos.x = this.morph.width * 0.5 + this.pos.x * morph.width * 0.5;
-        // this.pos.y = this.morph.height * 0.5 + this.pos.y * morph.height * 0.5;
 
         this.insideTimer = 0;
         this.insideTimeToExpand = 0.5;
@@ -412,6 +434,9 @@ class Cluster {
         this.renderPosition = this.pos;
 
 
+        /*
+            Cargar las imagenes del fondo
+        */
         this.icon = new MorphImage(element.children[0]);
         this.background = new MorphImage(element.children[1]);
 
@@ -425,6 +450,11 @@ class Cluster {
         this.maxAlpha = 0.9;
 
     }
+
+
+    /*
+        Constructora para cada cluster secundario
+    */
 
     SetDummie(morph, influenceMap, influenceSize) {
 
@@ -470,6 +500,11 @@ class Cluster {
 
 
         {
+
+            /*
+                Hacer que los cluster leviten
+            */
+
             function pingPong(time, length = 1) {
                 let cycle = Math.floor(time / length);
                 if (cycle % 2 === 0) {
@@ -506,10 +541,17 @@ class Cluster {
         const maxOffset3d = this.maxOffset3d;
 
 
+        /*
+            Calcular interaccion con el raton
+        */
         if (mouse) {
             let distance = Vector.distance(mouse, pos);
 
 
+
+            /*
+                Si está dentro del rango de interaccion
+            */
             if (distance < maxDistance) {
 
                 let t = 1 - distance / maxDistance;
@@ -523,8 +565,14 @@ class Cluster {
 
                 let distanceFromCollisionPoint = 1 - (Math.abs(t - collisionPoint) / maxDistanceToCollision);
 
+
+
                 if (!this.isExpanding) {
 
+                    /*
+                        Escalar horizontalmente la esfera dependiendo de la distancia del raton al punto de colision de la esfera
+                        De esta forma, la maxima extension ocurre por el centro del punto de interacción, en lugar de dentro de la esfera
+                    */
                     size.x = this.morph.lerp(size.x, size.x * maxStretch, distanceFromCollisionPoint);
                 }
                 pos = this.morph.vectorLerp(pos, mouse, easeInExpo(t));
@@ -539,10 +587,21 @@ class Cluster {
                     //TODO: tener en cuenta el tamaño para saber si se encuentra completamente dentro o no
                     let isInside = t > insidePoint;
 
+
+                    /*
+                        Si el raton se encuentra dentro este frame y ademas lo estuvo durante el frame anterior
+                    */
+
                     if (isInside && this.isInside) {
 
 
+
                         if (!this.isExpanding) {
+
+                            /*
+                                Tras pasar suficientemente tiempo dentro, comienza la expansion de la esfera
+                            */
+
                             if (this.insideTimer > this.insideTimeToExpand) {
 
                                 if (!this.isExpanding) {
@@ -562,8 +621,13 @@ class Cluster {
 
                         }
 
-                    } else {
+                    }
+                    else {
 
+
+                        /*
+                            Si no estoy dentro de la esfera, reduzco el tiempo interior ligeramente, para que el empequeñecimiento sea lineal
+                        */
 
                         this.insideTimer -= this.morph.dt * this.retractSpeed;
 
@@ -581,6 +645,9 @@ class Cluster {
 
                     if (!this.isExpanding) {
 
+                        /*
+                            Tenga el raton o no dentro de la esfera, multiplicar por la influencia del tiempo dentro de la esfera para que al sacar el raton no se pierda todo de golpe
+                        */
                         size.multiply(this.morph.lerp(1, this.insideExpansion, this.insideTimer / this.insideTimeToExpand));
 
 
@@ -593,6 +660,11 @@ class Cluster {
 
             }
             else
+
+            /*
+                Si no estoy dentro del raton, continuar reduciendo el tiempo dentro de la esfera para que no se mantenga si saco el raton de golpe
+            */
+
                 if (!this.dummie) {
 
 
