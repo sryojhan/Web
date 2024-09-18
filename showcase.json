@@ -33,7 +33,7 @@
             "name": "Parkitect",
             "x": 905,
             "y": 489,
-            "iconImg": "Projects/Background/Parkitect.jpeg",
+            "iconImg": "Projects/Background/Parkitect.png",
             "backgroundImg": "Projects/Background/ParkitectBackgroud.jpg"
         },
         {
@@ -41,21 +41,21 @@
             "x": -800,
             "y": 600,
             "iconImg": "Projects/Icons/Love_Icon.png",
-            "backgroundImg": "Projects/Background/Parkitect.jpeg"
+            "backgroundImg": "Projects/Background/Parkitect.png"
         },
         {
             "name": "Climb the tetris",
             "x": 190,
             "y": 500,
-            "iconImg": "Projects/Background/Parkitect.jpeg",
-            "backgroundImg": "Projects/Background/Parkitect.jpeg"
+            "iconImg": "Projects/Background/Parkitect.png",
+            "backgroundImg": "Projects/Background/Parkitect.png"
         },
         {
             "name": "DOME",
             "x": 900,
             "y": 100,
-            "iconImg": "Projects/Background/Parkitect.jpeg",
-            "backgroundImg": "Projects/Background/Parkitect.jpeg"
+            "iconImg": "Projects/Background/Parkitect.png",
+            "backgroundImg": "Projects/Background/Parkitect.png"
         }
         
 

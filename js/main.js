@@ -29,6 +29,7 @@ function init() {
     setupFooter();
     setupGoTop();
 
+    initModal();
 
     //Initial target frameRate
     this.frameRate = 60;
@@ -42,6 +43,7 @@ function init() {
 
 
     document.dispatchEvent(new CustomEvent('animationPrepared'));
+
 }
 
 
@@ -65,7 +67,13 @@ function drawTetris() {
 /**
  * Animation loop
  */
+
+
 function draw() {
+
+
+
+
 
     let time = Date.now();
     this.deltaTime = (time - this.lastFrame) * 0.001;
@@ -105,3 +113,47 @@ function setupGoTop() {
     this.goTopButton.style.display = "none";
 
 }
+
+function initModal(){
+
+
+    modal = document.getElementById("myModal");
+
+    if(!modal) return;
+
+    var span = document.getElementsByClassName("close")[0];
+    
+    
+    span.onclick = function() {
+    
+        modal.style.display = "none";
+    }
+    
+
+    const navi = document.getElementById("contact");
+
+    navi.addEventListener('mouseenter', () => {
+        navi.style.animationPlayState = 'paused';
+      });
+      
+      // Reanudar la animación cuando el ratón salga
+      navi.addEventListener('mouseleave', () => {
+        navi.style.animationPlayState = 'running';
+    });
+
+}
+
+function ShowContact(){
+
+    modal.style.display = "block";
+
+}
+
+
+document.addEventListener('mousedown', (event) => 
+{
+    if (event.target === modal) {
+        modal.style.display = "none";
+    }
+}
+);

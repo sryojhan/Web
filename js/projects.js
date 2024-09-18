@@ -50,7 +50,8 @@ function populateProjects(data) {
 
     let SetProjectData = function (project, key) {
         return elementTemplate
-            .replace("$url", `./projectPage.html#${key}`)
+            .replace("$url", './projectPage.html#' + 
+                key.replace("fav_", ''))
             .replace("$icon", project.icon)
             .replace("$Description", project.description)
             .replace("$Name", project.name)

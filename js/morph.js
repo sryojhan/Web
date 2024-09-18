@@ -56,6 +56,8 @@ function loadClusters(data) {
 
 function morphInit(data) {
 
+    this.morphData = data;
+
     anim.push(new Morph(data));
     addEventListener("resize", (event) => { onWindowResize(); });
 }
@@ -65,7 +67,7 @@ function onWindowResize() {
     for (let i = 0; i < this.anim.length; i++) {
         if ((this.anim[i] instanceof Morph)) {
 
-            this.anim[i] = new Morph();
+            this.anim[i] = new Morph(this.morphData);
         }
     }
 }
@@ -268,6 +270,7 @@ class Morph {
 
     moveMouse(e) {
 
+
         let rect = this.canvas.getBoundingClientRect();
 
         let mouse_x = e.clientX - rect.left;
@@ -281,6 +284,7 @@ class Morph {
 
         this.mouseClicked = true;
         this.mouseJustdown = true;
+
     }
 
     onMouseUp() {
@@ -696,7 +700,7 @@ class Cluster {
 
 
 
-        if (this.morph.isMouseJustPressed() && !this.dummie) {
+        if (false && this.morph.isMouseJustPressed() && !this.dummie) {
             this.morph.setFillColor("white");
         }
 
