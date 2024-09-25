@@ -12,7 +12,11 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
 
             populateProjects(data);
-            init_filtering();
+
+            setTimeout(() => {
+                
+                init_filtering();
+            }, (1000));
         })
         .catch(error => {
             console.error('Error:', error);
@@ -92,6 +96,9 @@ function init_filtering() {
     let list = document.getElementById("lista");
     input.addEventListener('input', this.updateResults);
     input.elementList = list;
+
+
+    console.log(input);
 }
 
 
@@ -104,6 +111,20 @@ function updateResults(e) {
 
     for (let group of list.getElementsByClassName("grupo")) {
         //Each of the groups inside the list (i.e. Classic games)
+
+
+        
+        if(group.getElementsByTagName("h1")[0].innerHTML == "Featured"){
+
+            if(inputText.length > 0){
+                group.style.display = "none";
+            }
+            else{
+                group.style.display = "block";
+            
+            }
+            continue;
+        }
 
 
         let visible = false;

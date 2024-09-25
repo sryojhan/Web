@@ -6,7 +6,7 @@
         "icon": "Projects/Icons/Parkitect.png",
         "url": "./Projects/Ordenacion.html",
         "target": "_self",
-        "group": "Featured "
+        "group": "Featured"
 
     },
     "fav_everhood": {
@@ -50,6 +50,9 @@
         "target": "_self",
         "group": null
     },
+
+
+
     "parkitect": {
         "name": "Parkitect",
         "description": "Ported to next-gen consoles with adapted controller support, including a custom radial menu and a new effects editor for managing park events in real time.",
@@ -58,6 +61,9 @@
         "target": "_self",
         "group": "Professional ",
 
+        "playstation": true,
+        "xbox": true,
+        "switch": false,
 
         
         
@@ -84,6 +90,9 @@
         "group": null,
 
 
+        "playstation": true,
+        "xbox": true,
+        "switch": true,
         
         
         "page": {
@@ -110,6 +119,9 @@
         "group": null,
 
 
+        "playstation": true,
+        "xbox": true,
+        "switch": true,
         
         
         "page": {
@@ -135,6 +147,9 @@
         "group": null,
 
 
+        "playstation": false,
+        "xbox": false,
+        "switch": true,
         
         
         "page": {
@@ -162,6 +177,9 @@
         "group": null,
 
 
+        "playstation": true,
+        "xbox": true,
+        "switch": true,
         
         
         "page": {
@@ -188,6 +206,9 @@
 
 
         
+        "playstation": true,
+        "xbox": true,
+        "switch": true,
         
         "page": {
             "title": "Slipstream",
@@ -214,6 +235,9 @@
         "group": null,
 
 
+        "playstation": true,
+        "xbox": true,
+        "switch": true,
         
         
         "page": {
@@ -239,6 +263,9 @@
         "group": null,
 
 
+        "playstation": true,
+        "xbox": true,
+        "switch": true,
         
         
         "page": {
@@ -264,6 +291,9 @@
         "group": null,
 
 
+        "playstation": true,
+        "xbox": true,
+        "switch": true,
         
         
         "page": {
@@ -707,12 +737,13 @@
             "shortDescription": "A browser-based Wordle game developed in JavaScript, where players guess words based on letter feedback to find the hidden word.",
             "longDescription": "This is a Wordle implementation in javascript for browser. Players must guess a hidden word by entering guesses and receiving feedback on the letters. Each attempt provides clues about which letters are correct and their positions. The goal is to find the hidden word within a limited number of guesses. With an intuitive interface and engaging gameplay, it offers a fun and challenging experience for word game enthusiasts.",
             "divider": " ",
+            "additionalHtml" : "Projects/wordle.html",
             "secondDescription": null,
             "video": null,
             "screenshots": null,
             "download": null,
             "processing": null,
-            "github": "https://github.com/Triturados/Motor"
+            "github": null
         }
     },
 

@@ -1,29 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Botones al borde inferior derecho</title>
+    <style>
+        .container {
+            position: relative;
+            width: 900px;
+            height: 200px;
+            border: 1px solid #000;
+        }
+
+        .button-group {
+            position: absolute;
+            bottom: 10px; /* Distancia del borde inferior */
+            right: 10px;  /* Distancia del borde derecho */
+            display: flex;
+            gap: 10px; /* Espacio entre los botones */
+        }
+
+        .button-group button {
+            padding: 10px 15px;
+        }
+    </style>
 </head>
 <body>
 
-
-
-
-    <div style="position: relative; margin-top: 300px; background-color: burlywood; width: 100%; height: 300px;">
-    
-        <div id="image" style="width: 20%; height: auto; background-color: coral;"></div>
-    
-    
+<div class="container">
+    <div class="button-group">
+        <button>Botón 1</button>
+        <button>Botón 2</button>
+        <button>Botón 3</button>
     </div>
+</div>
 
-    <p1>Holaaa</p1>
-    <script>
-
-        console.log(document.getElementById("image").style.width);
-        document.getElementById("image").style.height = document.getElementById("image").style.width;
-
-    </script>
 </body>
 </html>

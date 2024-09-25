@@ -20,8 +20,7 @@
 <body onload="init(); drawDots(); init_wordle(); ">
     <!-- <button id="go_top" onclick="onGoTop()">&times;</button> -->
 
-    <div class="superior">
-    </div>
+    <div class="superior"></div>
     <div id="id" class="body">
         <h1>PORTFOLIO</h1>
         <h4>Hi!, I make games</h4>
@@ -32,12 +31,8 @@
 
             Welcome to my portfolio! Mi name is Yojhan Steven García Peña and I’m passionate about creating unique and engaging gaming experiences, with a strong background in game development. I’ve worked on projects like <b>Everhood</b> and <b>Parkitect</b>, where I contributed to new gameplay features, user interfaces, and enhancing player interactions
 
-            <br>
-            <br>
-
-            <br>
-            <br>
-
+        </p>
+        <p style="margin-top: 50px;">
             Ready to create something awesome together? Feel free to reach out through the contact section <a href="About.html#Contacto">here</a>
 
         </p>
@@ -81,36 +76,64 @@
     </div>
 
     
-    <div class="body">
+    <div style="display: block;" id= "defaultContet">
 
-        <h3 id="Wordle" style="margin: auto; text-align: center; margin-top: 20px; ">Wordle</h3>
-        <p>
-            La úitima adición a la página es una versión del popular juego  <a href="https://wordle.danielfrg.com/">Wordle</a>. Para jugar basta con teclear la palabra que 
-            quieras colocar y pulsar enter para comprobar. Si la ventana se agita es que esta palabra no existe o no está permitida en el juego, así que prueba con otra.
-            También he creado un modo para daltónicos pues los colores por defecto podrían llegar a ser confusos.
-        </p>
+        <div class="body">
 
-    </div>
+            <h5 id="Wordle" style="margin: auto; text-align: center; margin-top: 20px; ">Wordle</h5>
+            <p>
+                La úitima adición a la página es una versión del popular juego  <a href="https://wordle.danielfrg.com/">Wordle</a>. Para jugar basta con teclear la palabra que 
+                quieras colocar y pulsar enter para comprobar. Si la ventana se agita es que esta palabra no existe o no está permitida en el juego, así que prueba con otra.
+                También he creado un modo para daltónicos pues los colores por defecto podrían llegar a ser confusos.
+            </p>
 
-    <br>
-
-
-    <div onselectstart="return false" class="wordle">
-        <div class="word">
-            <div class="letter"></div>
         </div>
+
+        <br>
+
+
+        <div onselectstart="return false" class="wordle">
+            <div class="word">
+                <div class="letter"></div>
+            </div>
+        </div>
+
+        <label style="display:block; text-align: center;" class="switch">
+            <input type="checkbox" onclick="colorblindMode()">
+            <span class="slider"></span>
+            Modo para daltónicos
+        </label>
+
+
     </div>
 
-    <label style="display:block; text-align: center;" class="switch">
-        <input type="checkbox" onclick="colorblindMode()">
-        <span class="slider"></span>
-        Modo para daltónicos
-    </label>
+    <div  class="body" style="display: none; margin-bottom: 100px;" id="content">
 
 
-    <br>
-    <br>
-    <br>
+            <h5 id="subtitle" style="margin: auto; text-align: center; margin-top: 20px;">Everhood</h5>
+            
+            <p id="description">
+                
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rem, facilis voluptatum, tenetur expedita nam eum recusandae repudiandae alias dolores ratione excepturi dolore eligendi temporibus pariatur asperiores ullam, quaerat tempore. Ad.
+                
+            </p>
+                   
+
+           <img  id="screenshot" style="margin-top: 30px;" class="screenshot" src="Projects/Screenshots/Everhood/2.jpg">
+
+            <p id="description2">
+                
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rem, facilis voluptatum, tenetur expedita nam eum recusandae repudiandae alias dolores ratione excepturi dolore eligendi temporibus pariatur asperiores ullam, quaerat tempore. Ad.
+                
+            </p>
+                            
+
+
+    </div>
+
+
+
+
 <!-- 
     <div class="body">
         <h2 id="Pagina">
@@ -182,14 +205,21 @@
     
                 <table class="contact">
                     <tr>
-                        <th>Teléfono</th>
                         <th>Correo</th>
                         <th>Linkedln</th>
+                        <th>GitHub</th>
                     </tr>
                     <tr>
-                        <td> <a href="tel: +34 634495950"> +34 634495950</a></th>
-                        <td><a href="mailto:sryojhan@gmail.com">sryojhan@gmail.com</a></th>
-                        <td> <a href="https://www.linkedin.com/in/yojhan/" target="_blank">mi perfil</a> </th>
+                        
+                        <td>
+                            <a href="mailto:sryojhan@gmail.com">imyojhan@gmail.com</a>
+                        </th>
+                        <td>
+                             <a href="https://www.linkedin.com/in/yojhan/" target="_blank">linkedin.com/in/yojhan</a> 
+                        </th>
+                        <td> 
+                            <a href="https://github.com/sryojhan">github.com/sryojhan</a>
+                        </th>
                     </tr>
     
                 </table>

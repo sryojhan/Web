@@ -931,6 +931,14 @@ class MorphHTMLManager {
         this.data = data;
         this.title = document.getElementById('morphTitle');
 
+        this.defaultContent = document.getElementById('defaultContet');
+        this.content = document.getElementById('content');
+
+        this.subtitle = document.getElementById('subtitle');
+        this.description = document.getElementById('description');
+        this.description2 = document.getElementById('description2');
+        this.screenshot = document.getElementById('screenshot');
+
 
         this.unloadProject();
     }
@@ -943,12 +951,28 @@ class MorphHTMLManager {
     unloadProject() {
 
         this.setTitle(this.data.default.title);
+        this.defaultContent.style.display = "block";
+        this.content.style.display = "none";
+
+        console.log(this.defaultContent);
     }
 
 
     loadProject(data) {
 
 
+        console.log(this.defaultContent);
+
+
+        this.defaultContent.style.display = "none";
+        this.content.style.display = "block";
+
         this.setTitle(data.name);
+
+        this.subtitle.innerHTML = data.subtitle;
+        this.description.innerHTML = data.subtitle;
+        this.description2.innerHTML = data.subtitle;
+        this.screenshot.source = data.subtitle;
+
     }
 }
