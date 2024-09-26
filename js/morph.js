@@ -278,6 +278,8 @@ class Morph {
 
         this.target_mouse_position = new Vector(mouse_x, mouse_y);
 
+
+        console.log(this.target_mouse_position);
     }
 
     onMouseDown() {
@@ -816,9 +818,10 @@ class Cluster {
             return 1 - Math.pow(1 - x, 3);
         }
 
-        if (this.morph.isMouseJustPressed() && this.expandCompleted) {
+        if (this.morph.isMouseJustPressed() && this.expandCompleted && !this.retract) {
             this.retract = true;
             this.retractTimer = 0;
+            this.morph.htmlManager.unloadProject();
         }
 
         if (!this.retract) {
@@ -855,7 +858,7 @@ class Cluster {
                 this.isExpanding = false;
                 this.morph.expandingCluster = null;
 
-                this.morph.htmlManager.unloadProject();
+                
             }
             let t = cubicEaseOut(this.retractTimer / retractDuration);
             var size = this.morph.lerp(this.morph.width, this.size, t);
@@ -954,14 +957,12 @@ class MorphHTMLManager {
         this.defaultContent.style.display = "block";
         this.content.style.display = "none";
 
-        console.log(this.defaultContent);
     }
 
 
     loadProject(data) {
 
 
-        console.log(this.defaultContent);
 
 
         this.defaultContent.style.display = "none";
