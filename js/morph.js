@@ -279,7 +279,6 @@ class Morph {
         this.target_mouse_position = new Vector(mouse_x, mouse_y);
 
 
-        console.log(this.target_mouse_position);
     }
 
     onMouseDown() {
@@ -287,6 +286,11 @@ class Morph {
         this.mouseClicked = true;
         this.mouseJustdown = true;
 
+        if(!this.count) this.count = 0;
+
+        else this.count++;
+         
+        console.log(this.target_mouse_position);
     }
 
     onMouseUp() {
@@ -657,8 +661,6 @@ class Cluster {
                         size.multiply(this.morph.lerp(1, this.insideExpansion, this.insideTimer / this.insideTimeToExpand));
 
 
-                        if (size.x > this.morph.width)
-                            console.log(size.x);
                     }
                 }
 
