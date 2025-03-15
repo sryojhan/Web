@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <link rel="stylesheet" href="css/css.css">
+    <link rel="stylesheet" href="css/wordle.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <link href="./images/favicon.ico" rel="icon">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="gamedev">
+    <meta name="descriptions" content="Game Developer portfolio">
+    <meta name="author" content="Yojhan">
+    <title>Yojhan - Game developer</title>
+</head>
+
+<body onload="init(); drawDots(); init_wordle(); ">
+    <!-- <button id="go_top" onclick="onGoTop()">&times;</button> -->
+
+    <div class="superior"></div>
+    <div id="id" class="body">
+        <h1>PORTFOLIO</h1>
+        <h4>Hi!, I make games</h4>
+        <hr>
+
+        <p>
+            <!-- My name is Yojhan Steven García Peña, and I’ve created this portfolio to showcase my most relevant projects and professional achievements. -->
+
+            Welcome to my portfolio! Mi name is Yojhan Steven García Peña and I’m passionate about creating unique and engaging gaming experiences, with a strong background in game development. I’ve worked on projects like <b>Everhood</b> and <b>Parkitect</b>, where I contributed to new gameplay features, user interfaces, and enhancing player interactions
+
+        </p>
+        <p style="margin-top: 50px;">
+            Ready to create something awesome together? Feel free to reach out through the contact section <a href="About.html#Contacto">here</a>
+
+        </p>
+    </div>
+
+    <div style="margin-top: 30px;"></div>
+
+    <div class="header">
+        <b>Main.cpp</b>
+        <a href="Projects.html" target="_self">Projects</a>
+        <a href="curriculum.html" target="_self">CV</a>
+        <a href="About.html" target="_self">About me</a>
+    </div>
+
+    <div class="canvasbg" style="height: 300px;">
+        <h1>YOJHAN</h1>
+        <canvas id="canvas" width="100%" height="300px"></canvas>
+    </div>
+    
+
+    <div style="margin-top: 30px;"></div>
+
+    <div class="body">
+        <p>
+
+            Check out my <a href="Projects.html">highlighted projects</a>, where you can see what I have worked on, download the games, or explore the source code.
+            <br>
+        </p>
+
+    </div>
+
+    <div class="parallax" style="margin-top: 60px">
+        <h2 id="morphTitle">
+            Main projects
+        </h2>
+    </div>
+    
+    <div id="morph" class="morph">
+
+        <canvas id="morphCanvas"></canvas>
+    </div>
+
+    
+    <div style="display: block;" id= "defaultContet">
+
+        <div class="body">
+
+            <h5 id="Wordle" style="margin: auto; text-align: center; margin-top: 20px; ">Wordle</h5>
+            <p>
+                La úitima adición a la página es una versión del popular juego  <a href="https://wordle.danielfrg.com/">Wordle</a>. Para jugar basta con teclear la palabra que 
+                quieras colocar y pulsar enter para comprobar. Si la ventana se agita es que esta palabra no existe o no está permitida en el juego, así que prueba con otra.
+                También he creado un modo para daltónicos pues los colores por defecto podrían llegar a ser confusos.
+            </p>
+
+        </div>
+
+        <br>
+
+
+        <div onselectstart="return false" class="wordle">
+            <div class="word">
+                <div class="letter"></div>
+            </div>
+        </div>
+
+        <label style="display:block; text-align: center;" class="switch">
+            <input type="checkbox" onclick="colorblindMode()">
+            <span class="slider"></span>
+            Modo para daltónicos
+        </label>
+
+
+    </div>
+
+    <div  class="body" style="display: none; margin-bottom: 100px;" id="content">
+
+
+            <h5 id="subtitle" style="margin: auto; text-align: center; margin-top: 20px;">Everhood</h5>
+            
+            <p id="description">
+                
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rem, facilis voluptatum, tenetur expedita nam eum recusandae repudiandae alias dolores ratione excepturi dolore eligendi temporibus pariatur asperiores ullam, quaerat tempore. Ad.
+                
+            </p>
+                   
+
+           <img  id="screenshot" style="margin-top: 30px;" class="screenshot" src="Projects/Screenshots/Everhood/2.jpg">
+
+            <p id="description2">
+                
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rem, facilis voluptatum, tenetur expedita nam eum recusandae repudiandae alias dolores ratione excepturi dolore eligendi temporibus pariatur asperiores ullam, quaerat tempore. Ad.
+                
+            </p>
+                            
+
+
+    </div>
+
+
+
+
+<!-- 
+    <div class="body">
+        <h2 id="Pagina">
+            Acerca de la página
+        </h2>
+        <p>
+            Esta página ha sido completamente desarrollada por mí usando html, javascript y css básico. Soy plenamente
+            consciente de que esté acercamiento a la hora de hacer una página es bastante primitivo pero al ser la
+            primera
+            página web que hago quería dominar primero las bases antes que aprender Bootstrap por ejemplo.
+            <br>
+            <br>
+
+            Esta página surgió de la necesidad de juntar todos mis proyectos en un único lugar. Nunca habíoa
+            desarrollado una
+            página web 'seria' antes así que esta era una oportunidad perfecta para poner a prueba y mejorar mis escasos
+            conocimientos de desarrollo web. Sé que la página podría haber resultado mucho mejor si la hubiera hecho de
+            otra manera ( esta página ahora mismo no es lo que se dice 'responsive' ), pero estoy bastante contento
+            tanto con las distintas cosas que he aprendido como con el resultado final.
+
+            <br>
+            <br>
+
+            Una de las cosas que tenía claro que quería añadirle a la página web era el crear elementos visuales de
+            forma procedural usando javascript. En mi opinión dichos elementos dotan de dinamismo a la página y creo que
+            queda visualmente todo más bonito. De entre estos elementos, quiero destacar el tetris de la sección de
+            proyectos,
+            pues aunque me costó mucho hacer que quedase exactamente como quería usando css, el resultado final es
+            bastante cercano
+            a mi idea inicial, aunque el algoritmo de colocación de piezas no sea el mejor creado, al menos hace lo que
+            puede.
+            <br>
+
+        </p>
+
+    </div> -->
+
+
+
+    <div class="legend">
+        All animations are made by me using javascript
+    </div>
+
+
+    <button id="contact" onclick="ShowContact()">
+    </button>
+
+
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          
+          
+            <div class="body" style="max-width: 700px;margin: auto;">
+    
+                <p>
+                    No dudes ponerte en contacto conmigo ante cualquier necesidad
+                </p>
+    
+    
+    
+                <p>
+                    <br>
+                    28300 Aranjuez, Madrid
+    
+                </p>
+    
+                <table class="contact">
+                    <tr>
+                        <th>Correo</th>
+                        <th>Linkedln</th>
+                        <th>GitHub</th>
+                    </tr>
+                    <tr>
+                        
+                        <td>
+                            <a href="mailto:sryojhan@gmail.com">imyojhan@gmail.com</a>
+                        </th>
+                        <td>
+                             <a href="https://www.linkedin.com/in/yojhan/" target="_blank">linkedin.com/in/yojhan</a> 
+                        </th>
+                        <td> 
+                            <a href="https://github.com/sryojhan">github.com/sryojhan</a>
+                        </th>
+                    </tr>
+    
+                </table>
+    
+    
+    
+                <br>
+            </div>
+
+
+
+        </div>
+      
+    </div>
+
+    <br>
+
+    <script src="js/wordle.js"></script>
+    <script src="js/morph.js"></script>
+    <script src="js/dictionary.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/dots.js"></script>
+    <script src="js/vector.js"></script>
+
+</body>
+
+</html>

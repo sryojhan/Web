@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botones al borde inferior derecho</title>
+    <style>
+        .container {
+            position: relative;
+            width: 900px;
+            height: 200px;
+            border: 1px solid #000;
+        }
+
+        .button-group {
+            position: absolute;
+            bottom: 10px; /* Distancia del borde inferior */
+            right: 10px;  /* Distancia del borde derecho */
+            display: flex;
+            gap: 10px; /* Espacio entre los botones */
+        }
+
+        .button-group button {
+            padding: 10px 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="button-group">
+        <button>Botón 1</button>
+        <button>Botón 2</button>
+        <button>Botón 3</button>
+    </div>
+</div>
+
+</body>
+</html>
