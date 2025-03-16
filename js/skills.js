@@ -4,7 +4,7 @@ $(document).ready(function(){
     
     var background = $("#testimonial-trigger");
 
-    var backgrounds = ["url('img/skills/coding.jpg')", "url('img/skills/ui.png')", "url('img/skills/debugger.jpg')", "url('img/skills/sonriendo.jpg')"];
+    var backgrounds = ["url('img/skills/coding.png')", "url('img/skills/ui.png')", "url('img/skills/debugger.png')", "url('img/skills/management.png')"];
 
     owl.options.afterMove = function(){
 
