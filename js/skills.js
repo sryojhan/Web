@@ -30,4 +30,22 @@ $(document).ready(function(){
         owl.goTo(3, false); // [página, tiempo de transición]
     });
 
+
+
+
+
+
+
+    const videos = document.querySelectorAll('video[data-source]');
+    videos.forEach(video => {
+        const source = document.createElement('source');
+        source.src = video.getAttribute('data-source');
+        source.type = 'video/mp4';
+        video.appendChild(source);
+        video.load(); // Recarga el video para aplicar el nuevo source
+
+    });
+
+
+
 });
