@@ -523,6 +523,11 @@ h6{
 	color: #fff;
 	font-size: 1.5em;
 }
+
+video{
+	object-fit: cover;
+}
+
 /* ===== End testimonial ===== */
 
 
@@ -530,7 +535,10 @@ h6{
 .portfolio_area{}
 .portfolio{}
 .portfoloi_top{}
-.portfoloi_content_area{}
+.portfoloi_content_area{
+	user-select: none;
+    -webkit-user-select: none
+}
 .portfolio_menu{
 	text-align: center;
 	overflow: hidden;
@@ -563,6 +571,9 @@ h6{
 	margin-bottom:30px;
 	overflow:hidden;
 	cursor: pointer;
+
+	user-select: none;
+    -webkit-user-select: none
 }
 .portfolio_single_content:hover img{
 	 -o-transform: scale(2);
@@ -1323,6 +1334,11 @@ p.subtitle {
 	transition-property: color;
 	-webkit-transition-duration: 0.3s;
 	transition-duration: 0.3s;
+}
+
+.carousel-inner img {
+
+    -webkit-user-drag: none;
 }
 
 .modal-dialog {
