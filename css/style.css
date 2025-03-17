@@ -19,6 +19,13 @@ body {
 	font-size: 14px;
 	color: #363940;
 }
+
+body::after{
+
+	background-image: url('img/skills/coding.png')", "url('img/skills/ui.png')", "url('img/skills/debugger.png')", "url('img/skills/management.png');
+
+}
+
 body .body {
 	height: 100%;
 }
