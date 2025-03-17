@@ -38,14 +38,17 @@ $(document).ready(function(){
 
     const videos = document.querySelectorAll('video[data-source]');
     videos.forEach(video => {
-        const source = document.createElement('source');
-        source.src = video.getAttribute('data-source');
-        source.type = 'video/mp4';
-        video.appendChild(source);
-        video.load(); // Recarga el video para aplicar el nuevo source
-
+        video.addEventListener('click', () => {
+            if (!video.querySelector('source')) { // Verifica si ya tiene un <source>
+                const source = document.createElement('source');
+                source.src = video.getAttribute('data-source');
+                source.type = 'video/mp4'; // Añade el tipo de video
+                video.appendChild(source);
+                video.load(); // Recarga el video para aplicar el nuevo source
+            }
+        });
     });
-
+    console.log("Inicializacion tardia")
 
 
 });
