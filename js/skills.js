@@ -48,7 +48,5 @@ $(document).ready(function(){
             }
         });
     });
-    console.log("Inicializacion tardia")
-
 
 });
